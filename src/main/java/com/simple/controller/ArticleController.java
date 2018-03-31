@@ -29,8 +29,17 @@ public class ArticleController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getArticleList(HttpSession session) {
         ServerResponse<List<ArticleVo>> listServerResponse = iArticleService.getArticleList();
-                List<ArticleVo> articleList = listServerResponse.getData();
-            session.setAttribute("articleList",articleList);
+        List<ArticleVo> articleList = listServerResponse.getData();
+        session.setAttribute("articleList", articleList);
         return "index";
     }
+
+    @RequestMapping(value = "/article/independent", method = RequestMethod.GET)
+    public String independent(String title,HttpSession session) {
+        ServerResponse<Article> serverResponse = iArticleService.independent(title);
+        Article article = serverResponse.getData();
+        session.setAttribute("article",article);
+        return "independent";
+    }
+
 }

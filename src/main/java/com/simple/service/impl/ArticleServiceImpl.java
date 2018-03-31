@@ -26,26 +26,35 @@ public class ArticleServiceImpl implements IArticleService {
         this.articleMapper = articleMapper;
     }
 
-    public ServerResponse<List<ArticleVo>> getArticleList(){
+    public ServerResponse<List<ArticleVo>> getArticleList() {
         List<ArticleVo> articleVo = new ArrayList<>();
-        List<Article> articleList =  articleMapper.getArticleList();
-        if (articleList.size() != 0){
-            for (Article article:articleList) {
+        List<Article> articleList = articleMapper.getArticleList();
+        if (articleList.size() != 0) {
+            for (Article article : articleList) {
                 ArticleVo articleVo1 = assembleArticleListVo(article);
                 articleVo.add(articleVo1);
             }
-            return ServerResponse.createBySuccess("查询成功",articleVo);
+            return ServerResponse.createBySuccess("查询成功", articleVo);
         }
         return ServerResponse.createByErrorMessage("没有查询到任何博客");
     }
 
-    private ArticleVo assembleArticleListVo(Article article){
-         ArticleVo articleVo = new ArticleVo();
-         articleVo.setTitle(article.getTitle());
-         String s = article.getContent();
-         s = s.substring(0,50) + "...";
-         articleVo.setContent(s);
-         article.setStatus(article.getStatus());
-         return articleVo;
+    public ServerResponse<Article> independent(String title) {
+        Article article = articleMapper.getIndependentArticle(title);
+        if (article != null) {
+            return ServerResponse.createBySuccess("查询成功", article);
+        }
+        return ServerResponse.createByErrorMessage("查询异常!!!");
+    }
+
+    private ArticleVo assembleArticleListVo(Article article) {
+        ArticleVo articleVo = new ArticleVo();
+        articleVo.setTitle(article.getTitle());
+        String s = article.getContent();
+        s = s.substring(0, 50) + "...";
+        articleVo.setContent(s);
+        articleVo.setStatus(article.getStatus());
+        articleVo.setCreateTime(article.getCreateTime());
+        return articleVo;
     }
 }

@@ -1,5 +1,7 @@
 package vo;
 
+import java.util.Date;
+
 /**
  * Create by S I M P L E on 2018/03/31 19:25:04
  */
@@ -10,6 +12,8 @@ public class ArticleVo {
     private String content;
 
     private String status;
+
+    private Date createTime;
 
     public String getTitle() {
         return title;
@@ -33,5 +37,13 @@ public class ArticleVo {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

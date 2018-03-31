@@ -122,4 +122,10 @@
         <include refid="Base_Column_List"/>
         from simple_article limit 0,5
     </select>
+
+    <select id="getIndependentArticle" resultMap="BaseResultMap" parameterType="String">
+        select
+        <include refid="Base_Column_List"/>
+        from simple_article where title = #{title} and status + 1
+    </select>
 </mapper>

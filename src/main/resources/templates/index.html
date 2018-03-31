@@ -73,7 +73,7 @@
     <div class="row" >
       <div class="col-lg-8 col-md-10 mx-auto" >
         <div class="post-preview" th:each="article:${session.articleList}">
-          <a href="post.html">
+          <a th:href="@{/article/independent(title=${article.title})}">
             <h2 class="post-title">
               <td th:text="${article.title}"></td>
             </h2>
@@ -81,9 +81,8 @@
               <td th:text="${article.content}"></td>
             </h3>
           </a>
-          <p class="post-meta"><td th:text="${article.status}"></td>
-            <a href="#">Start Bootstrap</a>
-            on September 24, 2018</p>
+          <td><span class="post-meta">被浏览次数&nbsp;&nbsp;</span></td><td th:text="${article.status}"></td>
+          <span class="post-meta" th:text="${article.createTime}"></span>
         </div>
         <hr>
 
