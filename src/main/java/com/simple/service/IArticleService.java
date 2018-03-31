@@ -1,7 +1,7 @@
 package com.simple.service;
 
 import com.simple.common.ServerResponse;
-import com.simple.pojo.Article;
+import vo.ArticleVo;
 
 import java.util.List;
 
@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface IArticleService {
 
-    ServerResponse<List<Article>> getArticleList();
+    ServerResponse<List<ArticleVo>> getArticleList();
 }

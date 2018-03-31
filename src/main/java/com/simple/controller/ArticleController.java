@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import vo.ArticleVo;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -27,8 +28,8 @@ public class ArticleController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getArticleList(HttpSession session) {
-        ServerResponse<List<Article>> listServerResponse = iArticleService.getArticleList();
-                List<Article> articleList = listServerResponse.getData();
+        ServerResponse<List<ArticleVo>> listServerResponse = iArticleService.getArticleList();
+                List<ArticleVo> articleList = listServerResponse.getData();
             session.setAttribute("articleList",articleList);
         return "index";
     }

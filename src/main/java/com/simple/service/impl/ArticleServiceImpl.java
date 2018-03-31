@@ -6,7 +6,10 @@ import com.simple.pojo.Article;
 import com.simple.service.IArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.expression.Lists;
+import vo.ArticleVo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,11 +26,26 @@ public class ArticleServiceImpl implements IArticleService {
         this.articleMapper = articleMapper;
     }
 
-    public ServerResponse<List<Article>> getArticleList(){
+    public ServerResponse<List<ArticleVo>> getArticleList(){
+        List<ArticleVo> articleVo = new ArrayList<>();
         List<Article> articleList =  articleMapper.getArticleList();
         if (articleList.size() != 0){
-            return ServerResponse.createBySuccess("查询成功",articleList);
+            for (Article article:articleList) {
+                ArticleVo articleVo1 = assembleArticleListVo(article);
+                articleVo.add(articleVo1);
+            }
+            return ServerResponse.createBySuccess("查询成功",articleVo);
         }
         return ServerResponse.createByErrorMessage("没有查询到任何博客");
+    }
+
+    private ArticleVo assembleArticleListVo(Article article){
+         ArticleVo articleVo = new ArticleVo();
+         articleVo.setTitle(article.getTitle());
+         String s = article.getContent();
+         s = s.substring(0,50) + "...";
+         articleVo.setContent(s);
+         article.setStatus(article.getStatus());
+         return articleVo;
     }
 }
