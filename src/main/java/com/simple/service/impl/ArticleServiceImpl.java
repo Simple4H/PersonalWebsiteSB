@@ -8,7 +8,6 @@ import com.simple.pojo.Article;
 import com.simple.service.IArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.expression.Lists;
 import vo.ArticleVo;
 
 import java.util.ArrayList;
