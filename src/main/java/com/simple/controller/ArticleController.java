@@ -1,12 +1,12 @@
 package com.simple.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.simple.common.ServerResponse;
 import com.simple.pojo.Article;
 import com.simple.service.IArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import vo.ArticleVo;
 
 import javax.servlet.http.HttpSession;
@@ -27,10 +27,10 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String getArticleList(HttpSession session) {
-        ServerResponse<List<ArticleVo>> listServerResponse = iArticleService.getArticleList();
-        List<ArticleVo> articleList = listServerResponse.getData();
-        session.setAttribute("articleList", articleList);
+    public String getArticleHotList(HttpSession session) {
+        ServerResponse<List<ArticleVo>> listServerResponse = iArticleService.getArticleHotList();
+        List<ArticleVo> articleHotList = listServerResponse.getData();
+        session.setAttribute("articleHotList", articleHotList);
         return "index";
     }
 
@@ -40,6 +40,13 @@ public class ArticleController {
         Article article = serverResponse.getData();
         session.setAttribute("article",article);
         return "independent";
+    }
+
+    @RequestMapping(value = "/post",method = RequestMethod.GET)
+    public String post(@RequestParam(value = "pageNum",defaultValue = "1") int pageNum, @RequestParam(value = "pageSize",defaultValue = "4") int pageSize, HttpSession session){
+        ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(pageNum,pageSize);
+        session.setAttribute("pageInfoServerResponse",pageInfoServerResponse);
+        return "post";
     }
 
 }

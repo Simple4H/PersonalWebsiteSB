@@ -120,12 +120,24 @@
     <select id="getArticleList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from simple_article limit 0,5
+        from simple_article order by status desc limit 0,3
     </select>
 
     <select id="getIndependentArticle" resultMap="BaseResultMap" parameterType="String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from simple_article where title = #{title}
+    </select>
+
+    <update id="updateArticleStatus" parameterType="string">
+        update simple_article
+        set status = status + 1
+        where title = #{title}
+    </update>
+
+    <select id="getAllArticleList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from simple_article where title = #{title} and status + 1
+        from simple_article order by create_time desc
     </select>
 </mapper>

@@ -20,4 +20,8 @@ public interface ArticleMapper {
     List<Article> getArticleList();
 
     Article getIndependentArticle(String title);
+
+    int updateArticleStatus(String title);
+
+    List<Article> getAllArticleList();
 }

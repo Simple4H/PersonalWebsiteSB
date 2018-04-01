@@ -10,24 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class RedirectionController {
 
-    @RequestMapping(value = "/")
-    public String welcome(){
-        return "index";
-    }
-
-    @RequestMapping(value = "/index")
-    public String index(){
-        return "index";
-    }
-
     @RequestMapping(value = "/contact")
     public String contact(){
         return "contact";
-    }
-
-    @RequestMapping(value = "/post")
-    public String post(){
-        return "post";
     }
 
     @RequestMapping(value = "/about")

@@ -72,7 +72,7 @@
     <div class="container" >
     <div class="row" >
       <div class="col-lg-8 col-md-10 mx-auto" >
-        <div class="post-preview" th:each="article:${session.articleList}">
+        <div class="post-preview" th:each="article:${session.articleHotList}">
           <a th:href="@{/article/independent(title=${article.title})}">
             <h2 class="post-title">
               <td th:text="${article.title}"></td>
@@ -88,7 +88,7 @@
 
         <!-- Pager -->
         <div class="clearfix">
-          <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
+          <a class="btn btn-primary float-right" href="/post">更多博客 &rarr;</a>
         </div>
       </div>
     </div>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+asdasdasd
+<table>
+    <tr th:each="article:${session.pageInfoServerResponse.data.list}">
+        <td th:text="${article.title}">1</td>
+        <td th:text="${article.content}">2</td>
+        <td th:text="${article.createTime}">3</td>
+    </tr>
+</table>
+</body>
+</html>
