@@ -3,136 +3,141 @@
 
 <head>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-  <title>Simple Blog - HelloWorld</title>
+    <title>Simple Blog - HelloWorld</title>
 
-  <!-- Bootstrap core CSS -->
-  <link th:href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
 
-  <!-- Custom fonts for this template -->
-  <link th:href="@{vendor/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
-  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <!-- Custom fonts for this template -->
+    <link th:href="@{vendor/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet'
+          type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+          rel='stylesheet' type='text/css'>
 
-  <!-- Custom styles for this template -->
-  <link th:href="@{css/clean-blog.min.css}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{css/clean-blog.min.css}" rel="stylesheet">
 
 </head>
 
-  <body>
+<body>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-      <div class="container">
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
         <a class="navbar-brand" href="/">个人博客</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          Menu
-          <i class="fa fa-bars"></i>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+            <i class="fa fa-bars"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/">主页</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/about">关于</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/post">博客</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/contact">联系</a>
-            </li>
-          </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">主页</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">关于</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/post">博客</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">联系</a>
+                </li>
+            </ul>
         </div>
-      </div>
-    </nav>
+    </div>
+</nav>
 
-    <!-- Page Header -->
-    <header class="masthead" th:style="'background-image: url(' + @{img/home-bg.jpg} + ')'">
-      <div class="overlay"></div>
-      <div class="container">
+<!-- Page Header -->
+<header class="masthead" th:style="'background-image: url(' + @{img/home-bg.jpg} + ')'">
+    <div class="overlay"></div>
+    <div class="container">
         <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
-            <div class="site-heading">
-              <h1>S I M P L E</h1>
-              <span class="subheading">记录----我的学习</span>
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h1>S I M P L E</h1>
+                    <span class="subheading">记录----我的学习</span>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </header>
-
-    <!-- Main Content -->
-
-    <div class="container" >
-    <div class="row" >
-      <div class="col-lg-8 col-md-10 mx-auto" >
-        <div class="post-preview" th:each="article:${session.articleHotList}">
-          <a th:href="@{/article/independent(title=${article.title})}">
-            <h2 class="post-title">
-              <td th:text="${article.title}"></td>
-            </h2>
-            <h3 class="post-subtitle">
-              <td th:text="${article.content}"></td>
-            </h3>
-          </a>
-          <td><span class="post-meta">被浏览次数&nbsp;&nbsp;</span></td><td th:text="${article.status}"></td>
-          <span class="post-meta" th:text="${article.createTime}"></span>
-        </div>
-        <hr>
-
-        <!-- Pager -->
-        <div class="clearfix">
-          <a class="btn btn-primary float-right" href="/post">更多博客 &rarr;</a>
-        </div>
-      </div>
     </div>
+</header>
+
+<!-- Main Content -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="post-preview" th:each="article:${session.articleHotList}">
+                <a th:href="@{/article/independent(title=${article.title})}">
+                    <h2 class="post-title">
+                        <td th:text="${article.title}"></td>
+                    </h2>
+                    <h3 class="post-subtitle">
+                        <td th:text="${article.content}"></td>
+                    </h3>
+                </a>
+                <td><span class="post-meta">被浏览次数&nbsp;&nbsp;</span></td>
+                <td th:text="${article.status}"></td>
+                <span class="post-meta" th:text="${article.createTime}"></span>
+            </div>
+            <hr>
+
+            <!-- Pager -->
+            <div class="clearfix">
+                <a class="btn btn-primary float-right" href="/post">更多博客 &rarr;</a>
+            </div>
+        </div>
     </div>
+</div>
 
 
-    <hr>
+<hr>
 
-    <!-- Footer -->
-    <footer>
-      <div class="container">
+<!-- Footer -->
+<footer>
+    <div class="container">
         <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
-            <ul class="list-inline text-center">
-              <li class="list-inline-item">
-                <a href="http://wpa.qq.com/msgrd?v=3&uin=673724357&site=qq&menu=yes">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <ul class="list-inline text-center">
+                    <li class="list-inline-item">
+                        <a href="http://wpa.qq.com/msgrd?v=3&uin=673724357&site=qq&menu=yes">
                   <span class="fa-stack fa-lg">
                     <i class="fa fa-circle fa-stack-2x"></i>
                     <i class="fa fa-qq fa-stack-1x fa-inverse"></i>
                   </span>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="https://github.com/simplecxm">
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://github.com/simplecxm">
                   <span class="fa-stack fa-lg">
                     <i class="fa fa-circle fa-stack-2x"></i>
                     <i class="fa fa-github fa-stack-1x fa-inverse"></i>
                   </span>
-                </a>
-              </li>
-            </ul>
-            <p class="copyright text-muted"><a href="http://www.miitbeian.gov.cn">粤ICP备17064694号</a></p>
-          </div>
+                        </a>
+                    </li>
+                </ul>
+                <p class="copyright text-muted"><a href="http://www.miitbeian.gov.cn">粤ICP备17064694号</a></p>
+            </div>
         </div>
-      </div>
-    </footer>
+    </div>
+</footer>
 
-    <!-- Bootstrap core JavaScript -->
-    <script th:src="@{vendor/jquery/jquery.min.js}"></script>
-    <script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- Bootstrap core JavaScript -->
+<script th:src="@{vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
-    <!-- Custom scripts for this template -->
-    <script th:src="@{js/clean-blog.min.js}"></script>
+<!-- Custom scripts for this template -->
+<script th:src="@{js/clean-blog.min.js}"></script>
 
-  </body>
+</body>
 
 </html>
