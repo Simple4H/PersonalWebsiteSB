@@ -8,7 +8,7 @@ import com.simple.pojo.Article;
 import com.simple.service.IArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import vo.ArticleVo;
+import com.simple.vo.ArticleVo;
 
 import java.util.ArrayList;
 import java.util.List;

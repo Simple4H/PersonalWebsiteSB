@@ -3,7 +3,7 @@ package com.simple.service;
 import com.github.pagehelper.PageInfo;
 import com.simple.common.ServerResponse;
 import com.simple.pojo.Article;
-import vo.ArticleVo;
+import com.simple.vo.ArticleVo;
 
 import java.util.List;
 
