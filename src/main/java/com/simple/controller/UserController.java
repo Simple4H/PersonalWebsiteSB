@@ -27,13 +27,23 @@ public class UserController {
         this.iUserService = iUserService;
     }
 
-    @RequestMapping(value = "login",method = RequestMethod.GET)
+    @RequestMapping(value = "login.do", method = RequestMethod.GET)
     @ResponseBody
-    public ServerResponse<User> login(String username, String password, HttpSession session){
-        ServerResponse<User> userServerResponse = iUserService.login(username,password);
-        if (userServerResponse.isSuccess()){
-            session.setAttribute(Const.CURRENT_USER,userServerResponse.getData());
+    public ServerResponse<User> login(String username, String password, HttpSession session) {
+        ServerResponse<User> userServerResponse = iUserService.login(username, password);
+        if (userServerResponse.isSuccess()) {
+            session.setAttribute(Const.CURRENT_USER, userServerResponse.getData());
         }
         return userServerResponse;
+    }
+
+    @RequestMapping(value = "get_user_info.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse getUserInfo(HttpSession session) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user != null) {
+            return ServerResponse.createBySuccess("获取成功",user);
+        }
+        return ServerResponse.createByErrorMessage("请登录");
     }
 }
