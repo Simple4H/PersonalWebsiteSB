@@ -20,5 +20,14 @@ public class RedirectionController {
         return "about";
     }
 
+    @RequestMapping(value = "/login")
+    public String login(){
+        return "/backstage/login";
+    }
+
+    @RequestMapping(value = "/edit")
+    public String edit(){
+        return "/backstage/edit";
+    }
 
 }

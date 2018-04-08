@@ -6,9 +6,8 @@ import com.simple.pojo.User;
 import com.simple.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -27,14 +26,15 @@ public class UserController {
         this.iUserService = iUserService;
     }
 
-    @RequestMapping(value = "login.do", method = RequestMethod.GET)
-    @ResponseBody
-    public ServerResponse<User> login(String username, String password, HttpSession session) {
+    @RequestMapping(value = "login.do", method = RequestMethod.POST)
+    public String login( String username, String password, HttpSession session,Model model) {
         ServerResponse<User> userServerResponse = iUserService.login(username, password);
+        model.addAttribute("loginMessage",userServerResponse.getMsg());
         if (userServerResponse.isSuccess()) {
             session.setAttribute(Const.CURRENT_USER, userServerResponse.getData());
+            return "backstage/edit";
         }
-        return userServerResponse;
+        return "backstage/login";
     }
 
     @RequestMapping(value = "get_user_info.do", method = RequestMethod.GET)
@@ -42,7 +42,7 @@ public class UserController {
     public ServerResponse getUserInfo(HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user != null) {
-            return ServerResponse.createBySuccess("获取成功",user);
+            return ServerResponse.createBySuccess("获取成功", user);
         }
         return ServerResponse.createByErrorMessage("请登录");
     }
