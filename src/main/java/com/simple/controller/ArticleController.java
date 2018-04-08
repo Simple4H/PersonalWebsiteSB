@@ -6,6 +6,7 @@ import com.simple.pojo.Article;
 import com.simple.service.IArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.simple.vo.ArticleVo;
 
@@ -27,25 +28,25 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String getArticleHotList(HttpSession session) {
+    public String getArticleHotList(Model model) {
         ServerResponse<List<ArticleVo>> listServerResponse = iArticleService.getArticleHotList();
         List<ArticleVo> articleHotList = listServerResponse.getData();
-        session.setAttribute("articleHotList", articleHotList);
+        model.addAttribute("articleHotList", articleHotList);
         return "index";
     }
 
     @RequestMapping(value = "/article/independent", method = RequestMethod.GET)
-    public String independent(String title,HttpSession session) {
+    public String independent(String title,Model model) {
         ServerResponse<Article> serverResponse = iArticleService.independent(title);
         Article article = serverResponse.getData();
-        session.setAttribute("article",article);
+        model.addAttribute("article",article);
         return "independent";
     }
 
     @RequestMapping(value = "/post",method = RequestMethod.GET)
-    public String post(@RequestParam(value = "pageNum",defaultValue = "1") int pageNum, @RequestParam(value = "pageSize",defaultValue = "4") int pageSize, HttpSession session){
+    public String post(@RequestParam(value = "pageNum",defaultValue = "1") int pageNum, @RequestParam(value = "pageSize",defaultValue = "4") int pageSize, Model model){
         ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(pageNum,pageSize);
-        session.setAttribute("pageInfoServerResponse",pageInfoServerResponse);
+        model.addAttribute("pageInfoServerResponse",pageInfoServerResponse);
         return "post";
     }
 

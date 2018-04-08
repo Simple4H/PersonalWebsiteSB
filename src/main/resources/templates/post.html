@@ -76,7 +76,7 @@
 <div>
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-md-10 mx-auto" th:each="article:${session.pageInfoServerResponse.data.list}">
+            <div class="col-lg-8 col-md-10 mx-auto" th:each="article:${pageInfoServerResponse.data.list}">
                 <a th:href="@{/article/independent(title=${article.title})}">
                     <h2 class="section-heading" th:text="${article.title}"></h2>
                     <p th:text="${article.content}"></p>
@@ -88,10 +88,10 @@
 
         <!-- Pager -->
         <div class="clearfix">
-            <a class="btn btn-primary float-left" th:if="${!session.pageInfoServerResponse.data.isFirstPage}"
-               th:href="@{/post(pageNum=${session.pageInfoServerResponse.data.pageNum-1})}">&DoubleLongLeftArrow;上一页</a>
-            <a class="btn btn-primary float-right" th:if="${!session.pageInfoServerResponse.data.isLastPage}"
-               th:href="@{/post(pageNum=${session.pageInfoServerResponse.data.pageNum+1})}">下一页&DoubleLongRightArrow;</a>
+            <a class="btn btn-primary float-left" th:if="${!pageInfoServerResponse.data.isFirstPage}"
+               th:href="@{/post(pageNum=${pageInfoServerResponse.data.pageNum-1})}">&DoubleLongLeftArrow;上一页</a>
+            <a class="btn btn-primary float-right" th:if="${!pageInfoServerResponse.data.isLastPage}"
+               th:href="@{/post(pageNum=${pageInfoServerResponse.data.pageNum+1})}">下一页&DoubleLongRightArrow;</a>
         </div>
     </div>
 </div>

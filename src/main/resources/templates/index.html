@@ -76,7 +76,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-            <div class="post-preview" th:each="article:${session.articleHotList}">
+            <div class="post-preview" th:each="article:${articleHotList}">
                 <a th:href="@{/article/independent(title=${article.title})}">
                     <h2 class="post-title">
                         <td th:text="${article.title}"></td>
