@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 /**
  * Create by S I M P L E on 2018/04/02 12:11:52
@@ -32,12 +34,12 @@ public class UserController {
         model.addAttribute("loginMessage",userServerResponse.getMsg());
         if (userServerResponse.isSuccess()) {
             session.setAttribute(Const.CURRENT_USER, userServerResponse.getData());
-            return "backstage/edit";
+            return "backstage/tables";
         }
         return "backstage/login";
     }
 
-    @RequestMapping(value = "get_user_info.do", method = RequestMethod.GET)
+    @RequestMapping(value = "get_user_info.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse getUserInfo(HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
@@ -45,5 +47,16 @@ public class UserController {
             return ServerResponse.createBySuccess("获取成功", user);
         }
         return ServerResponse.createByErrorMessage("请登录");
+    }
+
+    //等出
+    @RequestMapping(value = "logout.do",method = RequestMethod.GET)
+    public void userLogout(HttpSession session, HttpServletResponse response){
+        session.removeAttribute(Const.CURRENT_USER);
+        try {
+            response.sendRedirect("/");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
