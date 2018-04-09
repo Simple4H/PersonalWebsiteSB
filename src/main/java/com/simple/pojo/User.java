@@ -1,6 +1,7 @@
 package com.simple.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class User implements Serializable {
     private Integer id;
@@ -9,10 +10,13 @@ public class User implements Serializable {
 
     private String password;
 
-    public User(Integer id, String username, String password) {
+    private Date updateTime;
+
+    public User(Integer id, String username, String password, Date updateTime) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.updateTime = updateTime;
     }
 
     public User() {
@@ -41,5 +45,13 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }
