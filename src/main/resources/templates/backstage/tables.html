@@ -32,13 +32,13 @@
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
                 <a class="nav-link" href="/tables">
                     <i class="fa fa-fw fa-table"></i>
-                    <span class="nav-link-text">文章管理</span>
+                    <span class="nav-link-text">管理文章</span>
                 </a>
             </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
                 <a class="nav-link" href="/edit">
                     <i class="fa fa-fw fa-plus-square"></i>
-                    <span class="nav-link-text">文章编辑</span>
+                    <span class="nav-link-text">添加文章</span>
                 </a>
             </li>
         </ul>
@@ -567,7 +567,9 @@
                     </table>
                 </div>
             </div>
-            <div class="card-footer small text-muted">上次登录的时间是:<td th:text="${session.CURRENT_USER.updateTime}"></td></div>
+            <div class="card-footer small text-muted">上次登录的时间是:
+                <td th:text="${session.CURRENT_USER.updateTime}"></td>
+            </div>
         </div>
     </div>
     <!-- /.container-fluid-->
@@ -575,7 +577,8 @@
     <footer class="sticky-footer">
         <div class="container">
             <div class="text-center">
-                <small>Copyright © Your Website 2018</small>
+                <small>S I M P L E © Personal Website 2018</small>
+                <small><a href="http://www.miitbeian.gov.cn">粤ICP备17064694号</a></small>
             </div>
         </div>
     </footer>
