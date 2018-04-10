@@ -79,15 +79,15 @@
             <div class="post-preview" th:each="article:${articleHotList}">
                 <a th:href="@{/article/independent(title=${article.title})}">
                     <h2 class="post-title">
-                        <td th:text="${article.title}"></td>
+                        <td th:utext="${article.title}"></td>
                     </h2>
                     <h3 class="post-subtitle">
-                        <td th:text="${article.content}"></td>
+                        <td th:utext="${article.content}"></td>
                     </h3>
                 </a>
                 <td><span class="post-meta">被浏览次数&nbsp;&nbsp;</span></td>
-                <td th:text="${article.status}"></td>
-                <span class="post-meta" th:text="${article.createTime}"></span>
+                <td th:utext="${article.status}"></td>
+                <span class="post-meta" th:utext="${article.createTime}"></span>
             </div>
             <hr>
 

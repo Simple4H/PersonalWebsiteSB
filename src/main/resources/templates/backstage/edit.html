@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>个人博客 后台管理</title>
+
+    <style type="text/css">
+        .toolbar {
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+        }
+
+        .text {
+            border: 1px solid #ccc;
+            height: 200px;
+        }
+
+        .context {
+
+        }
+    </style>
+    <!-- Bootstrap core CSS-->
+    <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/vendor/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
+    <!-- Page level plugin CSS-->
+    <!--<link th:href="@{/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">-->
+    <!--&lt;!&ndash; Custom styles for this template&ndash;&gt;-->
+    <link th:href="@{/css/sb-admin.css}" rel="stylesheet">
+    <link th:href="@{/css/buttons.css}" rel="stylesheet">
+</head>
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="index.html">个人博客后台管理系统</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                <a class="nav-link" href="/tables">
+                    <i class="fa fa-fw fa-table"></i>
+                    <span class="nav-link-text">文章管理</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                <a class="nav-link" href="/edit">
+                    <i class="fa fa-fw fa-plus-square"></i>
+                    <span class="nav-link-text">文章编辑</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav sidenav-toggler">
+            <li class="nav-item">
+                <a class="nav-link text-center" id="sidenavToggler">
+                    <i class="fa fa-fw fa-angle-left"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <form class="form-inline my-2 my-lg-0 mr-lg-2">
+                    <div class="input-group">
+                        <input class="form-control" type="text" placeholder="Search for...">
+                        <span class="input-group-append">
+                <button class="btn btn-primary" type="button">
+                  <i class="fa fa-search"></i>
+                </button>
+              </span>
+                    </div>
+                </form>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa fa-fw fa-sign-out"></i>登出</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- /.container-fluid-->
+<!-- /.content-wrapper-->
+<footer class="sticky-footer">
+    <div class="container">
+        <div class="text-center">
+            <small>Copyright © Your Website 2018</small>
+        </div>
+    </div>
+</footer>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a>新增文章</a>
+            </li>
+            <!--<li class="breadcrumb-item active">Tables</li>-->
+        </ol>
+        <!-- Example DataTables Card-->
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-plus-square"></i> 文章编辑
+            </div>
+            <div style="padding: 5px 0; color: #42abf8; font-size: x-large">标题</div>
+            <!-- 文本编辑器-->
+            <div>
+                <div id="div1" class="toolbar"></div>
+                <div id="div2" class="text" style="height: 50px;"></div>
+                <div style="padding: 5px 0; color: #42abf8; font-size: x-large">文章</div>
+                <div id="div3"></div>
+                <button class="button button-primary button-rounded button-normal" id="btn1">提交</button>
+            </div>
+            <div class="card-footer small text-muted">上次登录的时间是:<td th:text="${session.CURRENT_USER.updateTime}"></td></div>
+
+        </div>
+    </div>
+    <!-- /.container-fluid-->
+    <!-- /.content-wrapper-->
+    <footer class="sticky-footer">
+        <div class="container">
+            <div class="text-center">
+                <small>Copyright © Your Website 2018</small>
+            </div>
+        </div>
+    </footer>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">请问确认离开嘛？</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">当你选择确认时候,将会删除你的session!</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+                    <a class="btn btn-primary" href="/user/logout.do">确认</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap core JavaScript-->
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <!-- Core plugin JavaScript-->
+    <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+    <!-- Custom scripts for all pages-->
+    <script th:src="@{/js/sb-admin.min.js}"></script>
+    <!-- Custom scripts for this page-->
+    <script th:src="@{js/sb-admin-datatables.min.js}"></script>
+</div>
+
+
+<script type="text/javascript" th:src="@{/js/wangEditor.min.js}"></script>
+<script type="text/javascript">
+    var E = window.wangEditor;
+
+    var editor1 = new E('#div1', '#div2');
+    editor1.customConfig.zIndex = 20;
+    editor1.create();
+
+    var editor2 = new E('#div3');
+    editor2.customConfig.zIndex = 100;
+    editor2.create();
+
+    document.getElementById('btn1').addEventListener('click', function () {
+        $.ajax({
+            type        : 'post',
+            url         : 'http://localhost:8080/article/create_new_article.do',
+            dataType    : 'json',
+            data        :  {
+                "title":editor1.txt.html(),
+                "context":editor2.txt.html()
+            },
+            'success':function(data) {
+                if (data.valueOf().status === 0){
+                    alert(data.valueOf().msg);
+                }
+                else {
+                    alert(data.valueOf().msg);
+                }
+            }
+        });
+    }, false);
+
+</script>
+</body>
+</html>

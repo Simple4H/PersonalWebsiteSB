@@ -17,4 +17,6 @@ public interface IArticleService {
     ServerResponse<Article> independent(String title);
 
     ServerResponse<PageInfo> getAllArticleList(int pageNum, int pageSize);
+
+    ServerResponse createNewArticle(String title,String context);
 }

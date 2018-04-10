@@ -140,4 +140,8 @@
         <include refid="Base_Column_List"/>
         from simple_article order by create_time desc
     </select>
+
+    <insert id="createNewArticle" parameterType="string">
+        insert into simple_article values (null, #{title}, #{context}, '新闻', 0, now(), now())
+    </insert>
 </mapper>

@@ -3,10 +3,10 @@
 <mapper namespace="com.simple.dao.UserMapper">
     <resultMap id="BaseResultMap" type="com.simple.pojo.User">
         <constructor>
-            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-            <arg column="username" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="username" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
@@ -14,7 +14,7 @@
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from simple_user
         where id = #{id,jdbcType=INTEGER}
     </select>
@@ -76,16 +76,16 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.simple.pojo.User">
         update simple_user
-        set username = #{username,jdbcType=VARCHAR},
-            password = #{password,jdbcType=VARCHAR},
+        set username    = #{username,jdbcType=VARCHAR},
+            password    = #{password,jdbcType=VARCHAR},
             update_time = #{updateTime,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=INTEGER}
     </update>
 
     <select id="checkUsername" resultType="int" parameterType="String">
-        select
-            count(1)
-        from simple_user where username = #{username}
+        select count(1)
+        from simple_user
+        where username = #{username}
     </select>
 
     <select id="checkUsernameAndPassword" resultMap="BaseResultMap" parameterType="map">
@@ -93,4 +93,10 @@
         <include refid="Base_Column_List"/>
         from simple_user where username=#{username} and password = #{password}
     </select>
+
+    <update id="updateUserLoginTime" parameterType="string">
+        update simple_user
+        set update_time = now()
+        where username = #{username}
+    </update>
 </mapper>

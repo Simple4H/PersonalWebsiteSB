@@ -1,5 +1,4 @@
 target/
-!.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
 .apt_generated
@@ -26,3 +25,4 @@ nbdist/
 out/
 LOG_HOME_IS_UNDEFINED/
 /.mvn/
+src/main/resources/static/pug/

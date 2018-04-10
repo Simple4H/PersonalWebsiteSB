@@ -69,7 +69,14 @@ public class ArticleServiceImpl implements IArticleService {
         //将pageInfo用VO填充
         pageInfo.setList(articleVoList);
         return ServerResponse.createBySuccess("ojbk", pageInfo);
+    }
 
+    public ServerResponse createNewArticle(String title,String context){
+        int resultCount = articleMapper.createNewArticle(title, context);
+        if (resultCount > 0) {
+            return ServerResponse.createBySuccessMessage("新增成功");
+        }
+        return ServerResponse.createByErrorMessage("新增失败");
     }
 
     //组装ArticleVO

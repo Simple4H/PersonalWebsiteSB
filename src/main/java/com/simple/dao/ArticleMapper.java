@@ -1,6 +1,7 @@
 package com.simple.dao;
 
 import com.simple.pojo.Article;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -24,4 +25,7 @@ public interface ArticleMapper {
     int updateArticleStatus(String title);
 
     List<Article> getAllArticleList();
+
+    int createNewArticle(@Param("title") String title,@Param("context") String context);
+
 }

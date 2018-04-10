@@ -50,4 +50,10 @@ public class ArticleController {
         return "post";
     }
 
+    @RequestMapping(value = "/article/create_new_article.do",method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse createNewArticle(String title,String context){
+        return iArticleService.createNewArticle(title, context);
+    }
+
 }

@@ -27,6 +27,7 @@ public class UserServiceImpl implements IUserService {
             User user = userMapper.checkUsernameAndPassword(username, password);
             if (user != null) {
                 user.setPassword(StringUtils.EMPTY);
+                userMapper.updateUserLoginTime(username);
                 return ServerResponse.createBySuccess("登录成功",user);
             }
             return ServerResponse.createByErrorMessage("密码错误");
