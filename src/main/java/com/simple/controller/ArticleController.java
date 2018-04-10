@@ -43,11 +43,20 @@ public class ArticleController {
         return "independent";
     }
 
+    //前台
     @RequestMapping(value = "/post",method = RequestMethod.GET)
     public String post(@RequestParam(value = "pageNum",defaultValue = "1") int pageNum, @RequestParam(value = "pageSize",defaultValue = "4") int pageSize, Model model){
         ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(pageNum,pageSize);
         model.addAttribute("pageInfoServerResponse",pageInfoServerResponse);
         return "post";
+    }
+
+    //后台
+    @RequestMapping(value = "/backstage_post.do",method = RequestMethod.GET)
+    public String backstagePost(@RequestParam(value = "pageNum",defaultValue = "1") int pageNum, @RequestParam(value = "pageSize",defaultValue = "5") int pageSize,HttpSession session){
+        ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(pageNum,pageSize);
+        session.setAttribute("pageInfoServerResponse",pageInfoServerResponse);
+        return "backstage/tables";
     }
 
     @RequestMapping(value = "/article/create_new_article.do",method = RequestMethod.POST)

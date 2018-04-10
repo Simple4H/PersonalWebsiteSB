@@ -1,11 +1,12 @@
 package com.simple.vo;
 
-import java.util.Date;
+
+import java.io.Serializable;
 
 /**
  * Create by S I M P L E on 2018/03/31 19:25:04
  */
-public class ArticleVo {
+public class ArticleVo implements Serializable {
 
     private String title;
 
@@ -13,7 +14,7 @@ public class ArticleVo {
 
     private String status;
 
-    private Date createTime;
+    private String createTime;
 
     public String getTitle() {
         return title;
@@ -39,11 +40,11 @@ public class ArticleVo {
         this.status = status;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 }

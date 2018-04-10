@@ -1,8 +1,10 @@
 package com.simple.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.simple.common.Const;
 import com.simple.common.ServerResponse;
 import com.simple.pojo.User;
+import com.simple.service.IArticleService;
 import com.simple.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,17 +26,26 @@ public class UserController {
     private final IUserService iUserService;
 
     @Autowired
-    public UserController(IUserService iUserService) {
+    public UserController(IUserService iUserService, IArticleService iArticleService) {
         this.iUserService = iUserService;
+        this.iArticleService = iArticleService;
     }
 
+    private final IArticleService iArticleService;
+
     @RequestMapping(value = "login.do", method = RequestMethod.POST)
-    public String login( String username, String password, HttpSession session,Model model) {
+    public String login( String username, String password, HttpSession session,Model model,HttpServletResponse response) {
         ServerResponse<User> userServerResponse = iUserService.login(username, password);
         model.addAttribute("loginMessage",userServerResponse.getMsg());
         if (userServerResponse.isSuccess()) {
+            ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(1,5);
+            session.setAttribute("pageInfoServerResponse",pageInfoServerResponse);
             session.setAttribute(Const.CURRENT_USER, userServerResponse.getData());
-            return "backstage/tables";
+            try {
+                response.sendRedirect("/tables");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return "backstage/login";
     }
@@ -58,5 +69,20 @@ public class UserController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @RequestMapping(value = "/checkLogin.do")
+    public String login(HttpSession session,Model model,HttpServletResponse response){
+        if (session.getAttribute(Const.CURRENT_USER) != null){
+            ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(1,5);
+            session.setAttribute("pageInfoServerResponse",pageInfoServerResponse);
+            model.addAttribute("pageInfoServerResponse",pageInfoServerResponse);
+            try {
+                response.sendRedirect("/tables");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return "/backstage/login";
     }
 }

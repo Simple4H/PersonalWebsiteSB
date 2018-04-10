@@ -1,10 +1,8 @@
 package com.simple.controller;
 
-import com.simple.common.Const;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpSession;
 
 /**
  * Create by S I M P L E on 2018/03/31 17:09:55
@@ -23,13 +21,7 @@ public class RedirectionController {
         return "about";
     }
 
-    @RequestMapping(value = "/login")
-    public String login(HttpSession session){
-        if (session.getAttribute(Const.CURRENT_USER) != null){
-            return "/backstage/tables";
-        }
-        return "/backstage/login";
-    }
+
 
     @RequestMapping(value = "/edit")
     public String edit(){

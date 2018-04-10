@@ -6,6 +6,7 @@ import com.simple.common.ServerResponse;
 import com.simple.dao.ArticleMapper;
 import com.simple.pojo.Article;
 import com.simple.service.IArticleService;
+import com.simple.util.DateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.simple.vo.ArticleVo;
@@ -87,7 +88,7 @@ public class ArticleServiceImpl implements IArticleService {
         s = s.substring(0, 80) + "...";
         articleVo.setContent(s);
         articleVo.setStatus(article.getStatus());
-        articleVo.setCreateTime(article.getCreateTime());
+        articleVo.setCreateTime(DateTimeUtil.dateToStr(article.getCreateTime()));
         return articleVo;
     }
 }
