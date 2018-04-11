@@ -4,7 +4,6 @@ import com.github.pagehelper.PageInfo;
 import com.simple.common.ServerResponse;
 import com.simple.pojo.Article;
 import com.simple.service.IArticleService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

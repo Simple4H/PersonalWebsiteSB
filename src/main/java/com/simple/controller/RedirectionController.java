@@ -23,9 +23,9 @@ public class RedirectionController {
 
 
 
-    @RequestMapping(value = "/edit")
-    public String edit(){
-        return "/backstage/edit";
+    @RequestMapping(value = "/addArticle")
+    public String addArticle(){
+        return "/backstage/addArticle";
     }
 
     @RequestMapping(value = "/tables")
