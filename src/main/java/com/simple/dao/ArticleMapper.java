@@ -28,4 +28,6 @@ public interface ArticleMapper {
 
     int createNewArticle(@Param("title") String title,@Param("context") String context);
 
+    int deleteArticle(String title);
+
 }

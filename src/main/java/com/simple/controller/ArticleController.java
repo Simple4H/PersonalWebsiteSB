@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.simple.common.ServerResponse;
 import com.simple.pojo.Article;
 import com.simple.service.IArticleService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,8 +62,25 @@ public class ArticleController {
 
     @RequestMapping(value = "/article/create_new_article.do",method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse createNewArticle(String title,String context){
-        return iArticleService.createNewArticle(title, context);
+    public ServerResponse createNewArticle(String title,String context,HttpSession session){
+        ServerResponse serverResponse = iArticleService.createNewArticle(title, context);
+        if (serverResponse.isSuccess()){
+            ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(1,5);
+            session.setAttribute("pageInfoServerResponse",pageInfoServerResponse);
+            return serverResponse;
+        }
+        return serverResponse;
     }
 
+    //删除文章
+    @RequestMapping(value = "/article/delete_article.do",method = RequestMethod.GET)
+    public String deleteArticle(String title,@RequestParam(value = "pageNum",defaultValue = "1") int pageNum, @RequestParam(value = "pageSize",defaultValue = "5") int pageSize,HttpSession session){
+        ServerResponse serverResponse = iArticleService.deleteArticle(title);
+        if (serverResponse.isSuccess()){
+            ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(pageNum,pageSize);
+            session.setAttribute("pageInfoServerResponse",pageInfoServerResponse);
+            return "backstage/tables";
+        }
+        return "backstage/tables";
+    }
 }

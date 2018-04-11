@@ -144,4 +144,8 @@
     <insert id="createNewArticle" parameterType="string">
         insert into simple_article values (null, #{title}, #{context}, '新闻', 0, now(), now())
     </insert>
+
+    <delete id="deleteArticle" parameterType="string">
+        delete from simple_article where title = #{title}
+    </delete>
 </mapper>

@@ -19,4 +19,6 @@ public interface IArticleService {
     ServerResponse<PageInfo> getAllArticleList(int pageNum, int pageSize);
 
     ServerResponse createNewArticle(String title,String context);
+
+    ServerResponse deleteArticle(String title);
 }

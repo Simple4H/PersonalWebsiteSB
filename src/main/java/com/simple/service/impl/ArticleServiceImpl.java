@@ -91,4 +91,12 @@ public class ArticleServiceImpl implements IArticleService {
         articleVo.setCreateTime(DateTimeUtil.dateToStr(article.getCreateTime()));
         return articleVo;
     }
+
+    public ServerResponse deleteArticle(String title){
+        int resultCount = articleMapper.deleteArticle(title);
+        if (resultCount > 0) {
+            return ServerResponse.createBySuccessMessage("删除成功");
+        }
+        return ServerResponse.createByErrorMessage("删除失败");
+    }
 }
