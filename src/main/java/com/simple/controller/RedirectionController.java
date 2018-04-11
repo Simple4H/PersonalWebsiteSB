@@ -2,6 +2,7 @@ package com.simple.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 /**
@@ -20,8 +21,6 @@ public class RedirectionController {
     public String about(){
         return "about";
     }
-
-
 
     @RequestMapping(value = "/addArticle")
     public String addArticle(){

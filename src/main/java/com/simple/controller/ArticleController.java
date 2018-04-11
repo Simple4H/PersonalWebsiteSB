@@ -84,4 +84,9 @@ public class ArticleController {
         }
         return "backstage/tables";
     }
+
+    @RequestMapping(value = "/article/edit")
+    public String edit(){
+        return "/backstage/edit";
+    }
 }

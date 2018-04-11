@@ -124,54 +124,34 @@
                 <i class="fa fa-table"></i> 文章列表
             </div>
             <div class="card-body">
+                <!-- 编辑文章 -->
                 <div class="table-responsive">
-                    <table class="table table-bordered" width="100%" cellspacing="0">
-                        <thead>
-                        <tr>
-                            <td align="center"><h4>标题</h4></td>
-                            <td align="center"><h4>内容</h4></td>
-                            <td align="center" width="9%"><h4>阅读量</h4></td>
-                            <td align="center" width="15%"><h4>时间</h4></td>
-                            <td align="center" width="10%"><h4>操作</h4></td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="article:${session.pageInfoServerResponse.data.list}">
-                            <td th:utext="${article.title}">标题</td>
-                            <td th:utext="${article.content}">文章</td>
-                            <td align="center" th:utext="${article.status}">阅读量</td>
-                            <td align="center" th:utext="${article.createTime}">创建时间</td>
-                            <td >
-                                <a style="margin: 5px" class="button button-glow button-rounded button-highlight" href="/article/edit">
-                                    编辑
-                                </a>
-                                <a data-toggle="modal" data-target="#deleteModal">
-                                    <a style="margin: 5px"
-                                            class="button button-glow button-rounded button-caution"
-                                            th:href="@{/article/delete_article.do(title=${article.title})}">删除</a>
-                                </a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div align="center">
-                        <a style="margin-right: 25px"
-                           class="button button-glow button-rounded button-raised button-primary"
-                           th:if="${!session.pageInfoServerResponse.data.isFirstPage}"
-                           th:href="@{/backstage_post.do(pageNum=${session.pageInfoServerResponse.data.pageNum-1})}">上一页</a>
-                        <a style="text-decoration: none"
-                           th:each="i:${session.pageInfoServerResponse.data.navigatepageNums}"
-                           th:href="@{/backstage_post.do(pageNum=${i})}">
-                            <button class="button button-glow button-border button-rounded button-primary"
-                                    style="margin: 5px" th:text="${i}"
-                                    th:with="result=${session.pageInfoServerResponse.data.prePage+1}==${i}"
-                                    th:disabled="${result}"></button>
-                        </a>
-                        <a style="margin-left: 25px"
-                           class="button button-glow button-rounded button-raised button-primary"
-                           th:if="${!session.pageInfoServerResponse.data.isLastPage}"
-                           th:href="@{/backstage_post.do(pageNum=${session.pageInfoServerResponse.data.pageNum+1})}">下一页</a>
-                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+                <div>
+                    <button class="button button-glow button-rounded button-caution" onclick="goback()">取消</button>
+                    <a class="button button-glow button-rounded button-raised button-primary">提交</a>
                 </div>
             </div>
             <div class="card-footer small text-muted">上次登录的时间是:
@@ -233,27 +213,11 @@
         </div>
     </div>
 
-    <!-- Delete Modal-->
-    <!--<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"-->
-         <!--aria-hidden="true">-->
-        <!--<div class="modal-dialog" role="document">-->
-            <!--<div class="modal-content">-->
-                <!--<div class="modal-header">-->
-                    <!--<h5 class="modal-title" id="deleteModalLabel">请问确定删除嘛?</h5>-->
-                    <!--<button class="close" type="button" data-dismiss="modal" aria-label="Close">-->
-                        <!--<span aria-hidden="true">×</span>-->
-                    <!--</button>-->
-                <!--</div>-->
-                <!--<div class="modal-body">当你选择确认时候,将会删除该文章</div>-->
-                <!--<tr th:text="${title}"></tr>-->
-                <!--<div class="modal-footer">-->
-                    <!--<button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>-->
-                    <!--<a class="btn btn-primary" th:href="@{/article/delete_article.do(title=${title})}">确认</a>-->
-
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
+    <script type="text/javascript">
+        function goback() {
+            window.history.go(-1);
+        }
+    </script>
     <!-- Bootstrap core JavaScript-->
     <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
