@@ -74,9 +74,11 @@ public class ArticleController {
 
     //删除文章
     @RequestMapping(value = "/article/delete_article.do",method = RequestMethod.GET)
-    public String deleteArticle(String title,@RequestParam(value = "pageNum",defaultValue = "1") int pageNum, @RequestParam(value = "pageSize",defaultValue = "5") int pageSize,HttpSession session){
+    public String deleteArticle(String title, @RequestParam(value = "pageSize",defaultValue = "5") int pageSize,HttpSession session){
         ServerResponse serverResponse = iArticleService.deleteArticle(title);
         if (serverResponse.isSuccess()){
+            ServerResponse<PageInfo> a = (ServerResponse<PageInfo>) session.getAttribute("pageInfoServerResponse");
+            int pageNum = a.getData().getPageNum();
             ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(pageNum,pageSize);
             session.setAttribute("pageInfoServerResponse",pageInfoServerResponse);
             return "backstage/tables";
