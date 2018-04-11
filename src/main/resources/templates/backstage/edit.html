@@ -1,13 +1,29 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.w3.org/1999/xhtml">
-
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta charset="UTF-8">
     <title>个人博客 后台管理</title>
+
+    <style type="text/css">
+        .toolbar {
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+        }
+
+        .text {
+            border: 1px solid #ccc;
+            height: 200px;
+        }
+
+        .context {
+
+        }
+    </style>
+    <script type="text/javascript">
+        function goback() {
+            window.history.go(-1);
+        }
+    </script>
     <!-- Bootstrap core CSS-->
     <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
     <!-- Custom fonts for this template-->
@@ -18,9 +34,8 @@
     <link th:href="@{/css/sb-admin.css}" rel="stylesheet">
     <link th:href="@{/css/buttons.css}" rel="stylesheet">
 </head>
-
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
-<!-- Navigation-->
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
     <a class="navbar-brand" href="/tables">个人博客后台管理系统</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
@@ -44,8 +59,7 @@
             </li>
             <!--消息管理-->
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="messageManager">
-                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#messageManager"
-                   data-parent="#exampleAccordion">
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#messageManager" data-parent="#exampleAccordion">
                     <i class="fa fa-fw fa-envelope"></i>
                     <span class="nav-link-text">消息管理</span>
                 </a>
@@ -60,8 +74,7 @@
             </li>
             <!-- 友情链接 -->
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="友情链接">
-                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents"
-                   data-parent="#exampleAccordion">
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
                     <i class="fa fa-fw fa-link"></i>
                     <span class="nav-link-text">友情链接</span>
                 </a>
@@ -87,8 +100,7 @@
         </ul>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item" style="margin-right: 25px">
-                <a class="nav-link button button-glow button-rounded button-royal" data-toggle="modal"
-                   data-target="#returnModal">返回首页</a>
+                <a class="nav-link button button-glow button-rounded button-royal" data-toggle="modal" data-target="#returnModal">返回首页</a>
             </li>
             <li class="nav-item">
                 <form class="form-inline my-2 my-lg-0 mr-lg-2">
@@ -109,56 +121,40 @@
         </ul>
     </div>
 </nav>
+
+
+
 <div class="content-wrapper">
     <div class="container-fluid">
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a>所有文章</a>
+                <a>新增文章</a>
             </li>
             <!--<li class="breadcrumb-item active">Tables</li>-->
         </ol>
         <!-- Example DataTables Card-->
         <div class="card mb-3">
             <div class="card-header">
-                <i class="fa fa-table"></i> 文章列表
+                <i class="fa fa-plus-square"></i> 添加文章
             </div>
-            <div class="card-body">
-                <!-- 编辑文章 -->
-                <div class="table-responsive">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                </div>
+            <div style="padding: 5px 0; color: #42abf8; font-size: x-large; margin-left: 10px">标题</div>
+            <!-- 文本编辑器-->
+            <div>
+                <div id="div1" class="toolbar"></div>
+                <div id="div2" class="text" style="height: 50px;"></div>
+                <div style="padding: 5px 0; color: #42abf8; font-size: x-large; margin-left: 10px">文章</div>
+                <div id="div3"></div>
                 <div>
                     <button class="button button-glow button-rounded button-caution" onclick="goback()">取消</button>
-                    <a class="button button-glow button-rounded button-raised button-primary">提交</a>
+                    <button class="button button-glow button-rounded button-raised button-primary" id="btn1">提交</button>
                 </div>
             </div>
-            <div class="card-footer small text-muted">上次登录的时间是:
-                <td th:text="${session.CURRENT_USER.updateTime}"></td>
-            </div>
+            <div class="card-footer small text-muted">上次登录的时间是:<td th:text="${session.CURRENT_USER.updateTime}"></td></div>
+
         </div>
     </div>
+
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
@@ -184,7 +180,7 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">当你选择确认时候,将会删除你的登录信息!</div>
+                <div class="modal-body">当你选择确认时候,将会删除你的session!</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
                     <a class="btn btn-primary" href="/user/logout.do">确认</a>
@@ -192,7 +188,6 @@
             </div>
         </div>
     </div>
-
     <!-- Return Modal-->
     <div class="modal fade" id="returnModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
@@ -212,22 +207,46 @@
             </div>
         </div>
     </div>
-
-    <script type="text/javascript">
-        function goback() {
-            window.history.go(-1);
-        }
-    </script>
     <!-- Bootstrap core JavaScript-->
     <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
     <!-- Core plugin JavaScript-->
     <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
-    <!-- Custom scripts for all pages-->
-    <script th:src="@{/js/sb-admin.min.js}"></script>
-    <!-- Custom scripts for this page-->
-    <script th:src="@{/js/sb-admin-datatables.min.js}"></script>
 </div>
-</body>
 
+
+<script type="text/javascript" th:src="@{/js/wangEditor.min.js}"></script>
+<script type="text/javascript">
+    var E = window.wangEditor;
+
+    var editor1 = new E('#div1', '#div2');
+    editor1.customConfig.zIndex = 20;
+    editor1.create();
+
+    var editor2 = new E('#div3');
+    editor2.customConfig.zIndex = 100;
+    editor2.create();
+
+    document.getElementById('btn1').addEventListener('click', function () {
+        $.ajax({
+            type        : 'post',
+            url         : 'http://localhost:8080//article/edit_submit.do',
+            dataType    : 'json',
+            data        :  {
+                "title":editor1.txt.html(),
+                "context":editor2.txt.html()
+            },
+            'success':function(data) {
+                if (data.valueOf().status === 0){
+                    alert(data.valueOf().msg);
+                }
+                else {
+                    alert(data.valueOf().msg);
+                }
+            }
+        });
+    }, false);
+
+</script>
+</body>
 </html>

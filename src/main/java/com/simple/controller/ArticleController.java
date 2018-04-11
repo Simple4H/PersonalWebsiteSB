@@ -85,8 +85,14 @@ public class ArticleController {
         return "backstage/tables";
     }
 
-    @RequestMapping(value = "/article/edit")
+    @RequestMapping(value = "/article/edit", method = RequestMethod.GET)
     public String edit(){
         return "/backstage/edit";
+    }
+
+    @RequestMapping(value = "/article/edit_submit.do",method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse editSubmit(){
+        return ServerResponse.createBySuccessMessage("提交成功");
     }
 }
