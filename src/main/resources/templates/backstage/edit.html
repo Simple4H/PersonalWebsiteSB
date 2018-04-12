@@ -129,22 +129,26 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a>新增文章</a>
+                <a>修改文章</a>
             </li>
             <!--<li class="breadcrumb-item active">Tables</li>-->
         </ol>
         <!-- Example DataTables Card-->
         <div class="card mb-3">
             <div class="card-header">
-                <i class="fa fa-plus-square"></i> 添加文章
+                <i class="fa fa-plus-square"></i> 修改文章
             </div>
             <div style="padding: 5px 0; color: #42abf8; font-size: x-large; margin-left: 10px">标题</div>
             <!-- 文本编辑器-->
             <div>
                 <div id="div1" class="toolbar"></div>
-                <div id="div2" class="text" style="height: 50px;"></div>
-                <div style="padding: 5px 0; color: #42abf8; font-size: x-large; margin-left: 10px">文章</div>
-                <div id="div3"></div>
+                <div id="div2" class="text" style="height: 50px;">
+                    <span th:utext="${session.articleByTitle.data.title}"></span>
+                </div>
+                    <div style="padding: 5px 0; color: #42abf8; font-size: x-large; margin-left: 10px">文章</div>
+                <div id="div3">
+                    <span th:utext="${session.articleByTitle.data.content}"></span>
+                </div>
                 <div>
                     <button class="button button-glow button-rounded button-caution" onclick="goback()">取消</button>
                     <button class="button button-glow button-rounded button-raised button-primary" id="btn1">提交</button>
@@ -234,7 +238,7 @@
             dataType    : 'json',
             data        :  {
                 "title":editor1.txt.html(),
-                "context":editor2.txt.html()
+                "content":editor2.txt.html()
             },
             'success':function(data) {
                 if (data.valueOf().status === 0){

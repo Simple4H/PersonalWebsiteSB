@@ -21,4 +21,8 @@ public interface IArticleService {
     ServerResponse createNewArticle(String title,String context);
 
     ServerResponse deleteArticle(String title);
+
+    ServerResponse<Article> getArticleByTile(String title);
+
+    ServerResponse updateArticleByTitle(String title,String content,Integer id);
 }

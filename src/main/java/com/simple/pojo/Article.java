@@ -1,8 +1,9 @@
 package com.simple.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Article {
+public class Article implements Serializable {
     private Integer id;
 
     private String title;

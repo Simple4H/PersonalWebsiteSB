@@ -146,6 +146,21 @@
     </insert>
 
     <delete id="deleteArticle" parameterType="string">
-        delete from simple_article where title = #{title}
+        delete from simple_article
+        where title = #{title}
     </delete>
+
+    <select id="getArticleByTitle" parameterType="string" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from simple_article
+        where title=#{title}
+    </select>
+
+    <update id="updateArticleByTitle" parameterType="map">
+        update simple_article
+        set title   = #{title},
+            content = #{content}
+        where id = #{id}
+    </update>
 </mapper>

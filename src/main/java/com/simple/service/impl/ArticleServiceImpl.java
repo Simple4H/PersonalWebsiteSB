@@ -72,7 +72,7 @@ public class ArticleServiceImpl implements IArticleService {
         return ServerResponse.createBySuccess("ojbk", pageInfo);
     }
 
-    public ServerResponse createNewArticle(String title,String context){
+    public ServerResponse createNewArticle(String title, String context) {
         int resultCount = articleMapper.createNewArticle(title, context);
         if (resultCount > 0) {
             return ServerResponse.createBySuccessMessage("新增成功");
@@ -92,11 +92,27 @@ public class ArticleServiceImpl implements IArticleService {
         return articleVo;
     }
 
-    public ServerResponse deleteArticle(String title){
+    public ServerResponse deleteArticle(String title) {
         int resultCount = articleMapper.deleteArticle(title);
         if (resultCount > 0) {
             return ServerResponse.createBySuccessMessage("删除成功");
         }
         return ServerResponse.createByErrorMessage("删除失败");
+    }
+
+    public ServerResponse<Article> getArticleByTile(String title) {
+        Article article = articleMapper.getArticleByTitle(title);
+        if (article != null) {
+            return ServerResponse.createBySuccess("获取文章成功", article);
+        }
+        return ServerResponse.createByErrorMessage("获取文章失败！");
+    }
+
+    public ServerResponse updateArticleByTitle(String title, String content, Integer id) {
+        int resultCount = articleMapper.updateArticleByTitle(title, content, id);
+        if (resultCount > 0) {
+            return ServerResponse.createBySuccessMessage("更新成功");
+        }
+        return ServerResponse.createByErrorMessage("更新失败");
     }
 }

@@ -142,7 +142,7 @@
                             <td align="center" th:utext="${article.status}">阅读量</td>
                             <td align="center" th:utext="${article.createTime}">创建时间</td>
                             <td >
-                                <a style="margin: 5px" class="button button-glow button-rounded button-highlight" href="/article/edit">
+                                <a style="margin: 5px" class="button button-glow button-rounded button-highlight" th:href="@{/article/edit.do(title=${article.title})}">
                                     编辑
                                 </a>
                                 <a data-toggle="modal" data-target="#deleteModal">

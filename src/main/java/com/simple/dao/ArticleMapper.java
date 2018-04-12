@@ -30,4 +30,8 @@ public interface ArticleMapper {
 
     int deleteArticle(String title);
 
+    Article getArticleByTitle(String title);
+
+    int updateArticleByTitle(@Param("title")String title,@Param("content")String content,@Param("id")Integer id);
+
 }

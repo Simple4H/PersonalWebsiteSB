@@ -36,63 +36,80 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/article/independent", method = RequestMethod.GET)
-    public String independent(String title,Model model) {
+    public String independent(String title, Model model) {
         ServerResponse<Article> serverResponse = iArticleService.independent(title);
         Article article = serverResponse.getData();
-        model.addAttribute("article",article);
+        model.addAttribute("article", article);
         return "independent";
     }
 
     //前台
-    @RequestMapping(value = "/post",method = RequestMethod.GET)
-    public String post(@RequestParam(value = "pageNum",defaultValue = "1") int pageNum, @RequestParam(value = "pageSize",defaultValue = "4") int pageSize, Model model){
-        ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(pageNum,pageSize);
-        model.addAttribute("pageInfoServerResponse",pageInfoServerResponse);
+    @RequestMapping(value = "/post", method = RequestMethod.GET)
+    public String post(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "4") int pageSize, Model model) {
+        ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(pageNum, pageSize);
+        model.addAttribute("pageInfoServerResponse", pageInfoServerResponse);
         return "post";
     }
 
     //后台
-    @RequestMapping(value = "/backstage_post.do",method = RequestMethod.GET)
-    public String backstagePost(@RequestParam(value = "pageNum",defaultValue = "1") int pageNum, @RequestParam(value = "pageSize",defaultValue = "5") int pageSize,HttpSession session){
-        ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(pageNum,pageSize);
-        session.setAttribute("pageInfoServerResponse",pageInfoServerResponse);
+    @RequestMapping(value = "/backstage_post.do", method = RequestMethod.GET)
+    public String backstagePost(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, HttpSession session) {
+        ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(pageNum, pageSize);
+        session.setAttribute("pageInfoServerResponse", pageInfoServerResponse);
         return "backstage/tables";
     }
 
-    @RequestMapping(value = "/article/create_new_article.do",method = RequestMethod.POST)
+    @RequestMapping(value = "/article/create_new_article.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse createNewArticle(String title,String context,HttpSession session){
+    public ServerResponse createNewArticle(String title, String context, HttpSession session) {
         ServerResponse serverResponse = iArticleService.createNewArticle(title, context);
-        if (serverResponse.isSuccess()){
-            ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(1,5);
-            session.setAttribute("pageInfoServerResponse",pageInfoServerResponse);
+        if (serverResponse.isSuccess()) {
+            ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(1, 5);
+            session.setAttribute("pageInfoServerResponse", pageInfoServerResponse);
             return serverResponse;
         }
         return serverResponse;
     }
 
     //删除文章
-    @RequestMapping(value = "/article/delete_article.do",method = RequestMethod.GET)
-    public String deleteArticle(String title, @RequestParam(value = "pageSize",defaultValue = "5") int pageSize,HttpSession session){
+    @RequestMapping(value = "/article/delete_article.do", method = RequestMethod.GET)
+    public String deleteArticle(String title, @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, HttpSession session) {
         ServerResponse serverResponse = iArticleService.deleteArticle(title);
-        if (serverResponse.isSuccess()){
+        if (serverResponse.isSuccess()) {
             ServerResponse<PageInfo> a = (ServerResponse<PageInfo>) session.getAttribute("pageInfoServerResponse");
             int pageNum = a.getData().getPageNum();
-            ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(pageNum,pageSize);
-            session.setAttribute("pageInfoServerResponse",pageInfoServerResponse);
+            ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(pageNum, pageSize);
+            session.setAttribute("pageInfoServerResponse", pageInfoServerResponse);
             return "backstage/tables";
         }
         return "backstage/tables";
     }
 
-    @RequestMapping(value = "/article/edit", method = RequestMethod.GET)
-    public String edit(){
-        return "/backstage/edit";
+    @RequestMapping(value = "/article/edit.do", method = RequestMethod.GET)
+    public String edit(String title, HttpSession session) {
+        ServerResponse<Article> articleByTitle = iArticleService.getArticleByTile(title);
+        if (articleByTitle.isSuccess()) {
+            session.setAttribute("articleByTitle", articleByTitle);
+            return "backstage/edit";
+        }
+        return "backstage/edit";
     }
 
-    @RequestMapping(value = "/article/edit_submit.do",method = RequestMethod.POST)
+    //提交编辑文章
+    @RequestMapping(value = "/article/edit_submit.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse editSubmit(){
-        return ServerResponse.createBySuccessMessage("提交成功");
+    public ServerResponse editSubmit(String title, String content,@RequestParam(value = "pageSize", defaultValue = "5") int pageSize, HttpSession session) {
+        ServerResponse<Article> article = (ServerResponse<Article>) session.getAttribute("articleByTitle");
+        Integer id = article.getData().getId();
+        ServerResponse serverResponse = iArticleService.updateArticleByTitle(title, content, id);
+        if(serverResponse.isSuccess()){
+            ServerResponse<PageInfo> a = (ServerResponse<PageInfo>) session.getAttribute("pageInfoServerResponse");
+            int pageNum = a.getData().getPageNum();
+            ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(pageNum, pageSize);
+            session.setAttribute("pageInfoServerResponse", pageInfoServerResponse);
+            session.removeAttribute("articleByTitle");
+            return serverResponse;
+        }
+        return serverResponse;
     }
 }
