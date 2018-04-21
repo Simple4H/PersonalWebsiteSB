@@ -5,11 +5,11 @@
 
     <groupId>com.simple</groupId>
     <artifactId>personalwebsite</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-RELEASE</version>
     <packaging>war</packaging>
 
     <name>personalwebsite</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Personal Website</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
