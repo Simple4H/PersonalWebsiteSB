@@ -75,7 +75,7 @@
 <!-- Post Content -->
 <div>
     <div class="container">
-        <div class="row">
+        <div>
             <div class="col-lg-8 col-md-10 mx-auto" th:each="article:${pageInfoServerResponse.data.list}">
                 <a th:href="@{/article/independent(title=${article.title})}">
                     <h2 class="section-heading" th:utext="${article.title}"></h2>
