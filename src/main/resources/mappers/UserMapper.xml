@@ -6,11 +6,12 @@
             <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="username" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="authority" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
-        id, username, password, update_time
+        id, username, password, authority, update_time
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -24,9 +25,9 @@
     </delete>
     <insert id="insert" parameterType="com.simple.pojo.User">
         insert into simple_user (id, username, password,
-                                 update_time)
+                                 authority, update_time)
         values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
-                #{updateTime,jdbcType=TIMESTAMP})
+                #{authority,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="com.simple.pojo.User">
         insert into simple_user
@@ -39,6 +40,9 @@
             </if>
             <if test="password != null">
                 password,
+            </if>
+            <if test="authority != null">
+                authority,
             </if>
             <if test="updateTime != null">
                 update_time,
@@ -54,6 +58,9 @@
             <if test="password != null">
                 #{password,jdbcType=VARCHAR},
             </if>
+            <if test="authority != null">
+                #{authority,jdbcType=INTEGER},
+            </if>
             <if test="updateTime != null">
                 #{updateTime,jdbcType=TIMESTAMP},
             </if>
@@ -68,6 +75,9 @@
             <if test="password != null">
                 password = #{password,jdbcType=VARCHAR},
             </if>
+            <if test="authority != null">
+                authority = #{authority,jdbcType=INTEGER},
+            </if>
             <if test="updateTime != null">
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
@@ -78,6 +88,7 @@
         update simple_user
         set username    = #{username,jdbcType=VARCHAR},
             password    = #{password,jdbcType=VARCHAR},
+            authority   = #{authority,jdbcType=INTEGER},
             update_time = #{updateTime,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -99,4 +110,5 @@
         set update_time = now()
         where username = #{username}
     </update>
+
 </mapper>

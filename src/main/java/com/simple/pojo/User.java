@@ -10,12 +10,15 @@ public class User implements Serializable {
 
     private String password;
 
+    private Integer authority;
+
     private Date updateTime;
 
-    public User(Integer id, String username, String password, Date updateTime) {
+    public User(Integer id, String username, String password, Integer authority, Date updateTime) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.authority = authority;
         this.updateTime = updateTime;
     }
 
@@ -45,6 +48,14 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public Integer getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(Integer authority) {
+        this.authority = authority;
     }
 
     public Date getUpdateTime() {

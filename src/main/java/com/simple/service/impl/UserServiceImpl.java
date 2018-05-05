@@ -1,5 +1,6 @@
 package com.simple.service.impl;
 
+import com.simple.common.Const;
 import com.simple.common.ServerResponse;
 import com.simple.dao.UserMapper;
 import com.simple.pojo.User;
@@ -21,17 +22,25 @@ public class UserServiceImpl implements IUserService {
         this.userMapper = userMapper;
     }
 
-    public ServerResponse<User> login(String username, String password){
+    public ServerResponse<User> login(String username, String password) {
         int usernameResult = userMapper.checkUsername(username);
         if (usernameResult > 0) {
             User user = userMapper.checkUsernameAndPassword(username, password);
             if (user != null) {
                 user.setPassword(StringUtils.EMPTY);
                 userMapper.updateUserLoginTime(username);
-                return ServerResponse.createBySuccess("登录成功",user);
+                return ServerResponse.createBySuccess("登录成功", user);
             }
             return ServerResponse.createByErrorMessage("密码错误");
         }
         return ServerResponse.createByErrorMessage("用户名不存在");
     }
+
+    public ServerResponse checkUserAuthority(User user) {
+        if (user != null && user.getAuthority() == Const.Role.ROLE_ADMIN) {
+            return ServerResponse.createBySuccess();
+        }
+        return ServerResponse.createByError();
+    }
+
 }

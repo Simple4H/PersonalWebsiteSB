@@ -1,18 +1,22 @@
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
 
-create Database db_personalwebsite DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+create Database db_personalwebsite
+  DEFAULT CHARACTER SET utf8
+  COLLATE utf8_general_ci;
 use db_personalwebsite;
 
 
 CREATE TABLE `simple_user` (
-  `id`        int(11)     NOT NULL AUTO_INCREMENT
+  `id`          int(11)     NOT NULL AUTO_INCREMENT
   COMMENT '管理员表id',
-  `username`  varchar(50) NOT NULL
+  `username`    varchar(50) NOT NULL
   COMMENT '账号',
-  `password`  varchar(50) NOT NULL
+  `password`    varchar(50) NOT NULL
   COMMENT '密码',
-  update_time datetime    not null
+  `authority`   int(10)     default 0
+  comment '权限',
+  `update_time` datetime    not null
   comment '最后一次登录时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_name_unique` (`username`) USING BTREE

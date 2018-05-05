@@ -60,7 +60,7 @@ public class UserController {
         return ServerResponse.createByErrorMessage("请登录");
     }
 
-    //等出
+    //登出
     @RequestMapping(value = "logout.do",method = RequestMethod.GET)
     public void userLogout(HttpSession session, HttpServletResponse response){
         session.removeAttribute(Const.CURRENT_USER);
