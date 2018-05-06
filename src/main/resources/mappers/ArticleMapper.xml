@@ -163,4 +163,10 @@
             content = #{content}
         where id = #{id}
     </update>
+
+    <select id="checkTitleExist" resultType="int" parameterType="string">
+        select count(1)
+        from simple_article
+        where title = #{title}
+    </select>
 </mapper>

@@ -34,4 +34,6 @@ public interface ArticleMapper {
 
     int updateArticleByTitle(@Param("title")String title,@Param("content")String content,@Param("id")Integer id);
 
+    int checkTitleExist(String title);
+
 }

@@ -28,7 +28,7 @@ public class ArticleServiceImpl implements IArticleService {
         this.articleMapper = articleMapper;
     }
 
-    //获取点击量最高的3篇文章
+    // 获取点击量最高的3篇文章
     public ServerResponse<List<ArticleVo>> getArticleHotList() {
         List<ArticleVo> articleVo = new ArrayList<>();
         List<Article> articleList = articleMapper.getArticleList();
@@ -42,45 +42,51 @@ public class ArticleServiceImpl implements IArticleService {
         return ServerResponse.createByErrorMessage("没有查询到任何博客");
     }
 
-    //获取某篇文章
+    // 获取某篇文章
     public ServerResponse<Article> independent(String title) {
         Article article = articleMapper.getIndependentArticle(title);
         if (article != null) {
-            //添加一阅读数量
+            // 添加一阅读数量
             articleMapper.updateArticleStatus(title);
             return ServerResponse.createBySuccess("查询成功", article);
         }
         return ServerResponse.createByErrorMessage("查询异常!!!");
     }
 
-    //获取所有的文章
+    // 获取所有的文章
     public ServerResponse<PageInfo> getAllArticleList(int pageNum, int pageSize) {
-        //开始分页
+        // 开始分页
         PageHelper.startPage(pageNum, pageSize);
-        //查询所有的文章
+        // 查询所有的文章
         List<Article> articleList = articleMapper.getAllArticleList();
-        //重组VO
+        // 重组VO
         List<ArticleVo> articleVoList = new ArrayList<>();
         for (Article articleItem : articleList) {
             ArticleVo articleVo = assembleArticleListVo(articleItem);
             articleVoList.add(articleVo);
         }
-        //使用原查询结果放进pageInfo
+        // 使用原查询结果放进pageInfo
         PageInfo pageInfo = new PageInfo<>(articleList);
-        //将pageInfo用VO填充
+        // 将pageInfo用VO填充
         pageInfo.setList(articleVoList);
         return ServerResponse.createBySuccess("ojbk", pageInfo);
     }
 
+    // 新增文章
     public ServerResponse createNewArticle(String title, String context) {
-        int resultCount = articleMapper.createNewArticle(title, context);
-        if (resultCount > 0) {
-            return ServerResponse.createBySuccessMessage("新增成功");
+        int titleExist = articleMapper.checkTitleExist(title);
+        // 判断文章是否存在
+        if (titleExist < 1){
+            int resultCount = articleMapper.createNewArticle(title, context);
+            if (resultCount > 0) {
+                return ServerResponse.createBySuccessMessage("新增成功");
+            }
+            return ServerResponse.createByErrorMessage("新增失败");
         }
-        return ServerResponse.createByErrorMessage("新增失败");
+        return ServerResponse.createByErrorMessage("文章标题已经存在");
     }
 
-    //组装ArticleVO
+    // 组装ArticleVO
     private ArticleVo assembleArticleListVo(Article article) {
         ArticleVo articleVo = new ArticleVo();
         articleVo.setTitle(article.getTitle());
@@ -92,6 +98,7 @@ public class ArticleServiceImpl implements IArticleService {
         return articleVo;
     }
 
+    // 删除文章
     public ServerResponse deleteArticle(String title) {
         int resultCount = articleMapper.deleteArticle(title);
         if (resultCount > 0) {
@@ -100,6 +107,7 @@ public class ArticleServiceImpl implements IArticleService {
         return ServerResponse.createByErrorMessage("删除失败");
     }
 
+    // 通过标题获取文章
     public ServerResponse<Article> getArticleByTile(String title) {
         Article article = articleMapper.getArticleByTitle(title);
         if (article != null) {
@@ -108,6 +116,7 @@ public class ArticleServiceImpl implements IArticleService {
         return ServerResponse.createByErrorMessage("获取文章失败！");
     }
 
+    // 更新文章
     public ServerResponse updateArticleByTitle(String title, String content, Integer id) {
         int resultCount = articleMapper.updateArticleByTitle(title, content, id);
         if (resultCount > 0) {

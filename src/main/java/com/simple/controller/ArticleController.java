@@ -74,8 +74,6 @@ public class ArticleController {
         if (iUserService.checkUserAuthority(user).isSuccess()) {
             ServerResponse serverResponse = iArticleService.createNewArticle(title, context);
             if (serverResponse.isSuccess()) {
-                ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(1, 5);
-                session.setAttribute("pageInfoServerResponse", pageInfoServerResponse);
                 return serverResponse;
             }
             return serverResponse;
@@ -101,6 +99,7 @@ public class ArticleController {
         return "/error";
     }
 
+    // 编辑文章
     @RequestMapping(value = "/article/edit.do", method = RequestMethod.GET)
     public String edit(String title, HttpSession session) {
         ServerResponse<Article> articleByTitle = iArticleService.getArticleByTile(title);
