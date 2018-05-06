@@ -1,5 +1,6 @@
 package com.simple.service;
 
+import com.github.pagehelper.PageInfo;
 import com.simple.common.ServerResponse;
 
 /**
@@ -8,4 +9,6 @@ import com.simple.common.ServerResponse;
 public interface IMessageService {
 
     ServerResponse<String> uploadWebsiteMessage(String name, String email, String phone, String message);
+
+    ServerResponse<PageInfo> getAllMessage(int pageNum, int pageSize);
 }

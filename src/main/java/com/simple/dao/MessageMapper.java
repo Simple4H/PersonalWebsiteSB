@@ -3,6 +3,8 @@ package com.simple.dao;
 import com.simple.pojo.Message;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface MessageMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -17,6 +19,8 @@ public interface MessageMapper {
     int updateByPrimaryKey(Message record);
 
     int uploadMessage(@Param("name") String name, @Param("email")String email, @Param("phone")String phone, @Param("message")String message);
+
+    List<Message> getAllMessage();
 
 
 }

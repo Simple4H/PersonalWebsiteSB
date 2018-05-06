@@ -13,23 +13,28 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class RedirectionController {
 
     @RequestMapping(value = "/contact")
-    public String contact(){
+    public String contact() {
         return "contact";
     }
 
     @RequestMapping(value = "/about")
-    public String about(){
+    public String about() {
         return "about";
     }
 
     @RequestMapping(value = "/addArticle")
-    public String addArticle(){
+    public String addArticle() {
         return "/backstage/addArticle";
     }
 
     @RequestMapping(value = "/tables")
-    public String tables(){
+    public String tables() {
         return "/backstage/tables";
+    }
+
+    @RequestMapping(value = "/messageEdit")
+    public String messageEdit() {
+        return "/backstage/messageEdit";
     }
 
 }

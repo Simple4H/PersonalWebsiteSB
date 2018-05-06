@@ -107,6 +107,13 @@
     </update>
 
     <insert id="uploadMessage" parameterType="map">
-        insert into simple_message values (null, #{name}, #{email}, #{phone}, #{message},now())
+        insert into simple_message values (null, #{name}, #{email}, #{phone}, #{message}, now())
     </insert>
+
+    <select id="getAllMessage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from simple_message
+        order by create_time desc
+    </select>
 </mapper>
