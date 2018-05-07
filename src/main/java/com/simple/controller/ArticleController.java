@@ -96,7 +96,7 @@ public class ArticleController {
             }
             return "backstage/tables";
         }
-        return "/error";
+        return "/error2";
     }
 
     // 编辑文章
