@@ -5,6 +5,7 @@ import com.simple.common.ServerResponse;
 import com.simple.dao.UserMapper;
 import com.simple.pojo.User;
 import com.simple.service.IUserService;
+import com.simple.util.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,8 @@ public class UserServiceImpl implements IUserService {
     public ServerResponse<User> login(String username, String password) {
         int usernameResult = userMapper.checkUsername(username);
         if (usernameResult > 0) {
-            User user = userMapper.checkUsernameAndPassword(username, password);
+            String md5Password = MD5Util.MD5EncodeUtf8(password);
+            User user = userMapper.checkUsernameAndPassword(username, md5Password);
             if (user != null) {
                 user.setPassword(StringUtils.EMPTY);
                 userMapper.updateUserLoginTime(username);
