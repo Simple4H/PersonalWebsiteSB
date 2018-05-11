@@ -34,6 +34,7 @@ public class ArticleController {
 
     private final IUserService iUserService;
 
+    // 获取三篇点击量最高的文章
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getArticleHotList(Model model) {
         ServerResponse<List<ArticleVo>> listServerResponse = iArticleService.getArticleHotList();
@@ -42,6 +43,7 @@ public class ArticleController {
         return "index";
     }
 
+    // 获取单篇文章
     @RequestMapping(value = "/article/independent", method = RequestMethod.GET)
     public String independent(String title, Model model) {
         ServerResponse<Article> serverResponse = iArticleService.independent(title);
@@ -50,7 +52,7 @@ public class ArticleController {
         return "independent";
     }
 
-    //前台
+    // 前台获取文章
     @RequestMapping(value = "/post", method = RequestMethod.GET)
     public String post(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "4") int pageSize, Model model) {
         ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(pageNum, pageSize);
@@ -58,7 +60,7 @@ public class ArticleController {
         return "post";
     }
 
-    //后台
+    // 后台--文章列表
     @RequestMapping(value = "/backstage_post.do", method = RequestMethod.GET)
     public String backstagePost(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, HttpSession session) {
         ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(pageNum, pageSize);
@@ -66,7 +68,7 @@ public class ArticleController {
         return "backstage/tables";
     }
 
-    // 添加新的文章
+    // 后台--添加新的文章
     @RequestMapping(value = "/article/create_new_article.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse createNewArticle(String title, String context, HttpSession session) {
@@ -81,7 +83,7 @@ public class ArticleController {
         return ServerResponse.createByErrorMessage("权限不够哟，无法添加新的文章~");
     }
 
-    //删除文章
+    // 后台--删除文章
     @RequestMapping(value = "/article/delete_article.do", method = RequestMethod.GET)
     public String deleteArticle(String title, @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
@@ -99,7 +101,7 @@ public class ArticleController {
         return "/error2";
     }
 
-    // 编辑文章
+    // 后台--编辑文章
     @RequestMapping(value = "/article/edit.do", method = RequestMethod.GET)
     public String edit(String title, HttpSession session) {
         ServerResponse<Article> articleByTitle = iArticleService.getArticleByTile(title);
@@ -110,7 +112,7 @@ public class ArticleController {
         return "backstage/edit";
     }
 
-    // 提交编辑文章
+    // 后台--提交编辑文章
     @RequestMapping(value = "/article/edit_submit.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse editSubmit(String title, String content, @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, HttpSession session) {

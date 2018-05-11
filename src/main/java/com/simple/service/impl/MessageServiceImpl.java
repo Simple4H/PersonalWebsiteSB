@@ -36,7 +36,7 @@ public class MessageServiceImpl implements IMessageService {
     public ServerResponse<PageInfo> getAllMessage(int pageNum,int pageSize) {
         PageHelper.startPage(pageNum,pageSize);
         List<Message> messages = messageMapper.getAllMessage();
-        PageInfo pageInfo = new PageInfo(messages);
+        PageInfo<Message> pageInfo = new PageInfo<>(messages);
         return ServerResponse.createBySuccess("查询成功",pageInfo);
     }
 
