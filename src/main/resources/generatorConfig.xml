@@ -79,7 +79,5 @@
                selectByExampleQueryId="false"></table>
         <!-- simplenote mybatis插件的搭建 -->
 
-
-        <!-- simplenote mybatis插件的搭建 -->
     </context>
 </generatorConfiguration>
