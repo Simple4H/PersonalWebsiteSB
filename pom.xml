@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.simple</groupId>
-    <artifactId>personalwebsite</artifactId>
+    <artifactId>PersonalWebsiteSB</artifactId>
     <version>1.0.0-RELEASE</version>
     <packaging>war</packaging>
 
-    <name>personalwebsite</name>
+    <name>PersonalWebsiteSB</name>
     <description>Personal Website</description>
 
     <parent>
