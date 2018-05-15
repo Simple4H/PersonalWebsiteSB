@@ -10,11 +10,11 @@
 
   用户名：guest
 
-  密  码：guest
+  密    码：guest
 
-- 进入后台
+- 如何进入后台
 
-  
+  ![进入后台](https://github.com/simplecxm/PersonalWebsiteSB/blob/master/src/main/resources/static/other/help1.gif)
 
 ### 发现问题
 
