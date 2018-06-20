@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>验证邮箱</title>
+</head>
+<body>
+<form th:action="@{/user/check_email_code.do}" method="post">
+    <span>验证码</span>
+    <label for="emailCode"></label><input type="text" id="emailCode" name="emailCode"/>
+    <input type="submit" value="提交">
+</form>
+</body>
+</html>

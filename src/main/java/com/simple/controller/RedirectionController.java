@@ -37,4 +37,9 @@ public class RedirectionController {
         return "/backstage/messageEdit";
     }
 
+    @RequestMapping(value = "/register")
+    public String register(){
+        return "/backstage/register";
+    }
+
 }

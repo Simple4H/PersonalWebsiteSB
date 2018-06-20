@@ -111,4 +111,11 @@
         where username = #{username}
     </update>
 
+    <select id="checkEmail" parameterType="string" resultType="int">
+        select
+        <include refid="Base_Column_List"/>
+        from simple_user
+        where 
+    </select>
+
 </mapper>

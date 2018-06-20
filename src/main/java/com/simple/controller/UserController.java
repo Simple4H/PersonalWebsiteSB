@@ -6,6 +6,7 @@ import com.simple.common.ServerResponse;
 import com.simple.pojo.User;
 import com.simple.service.IArticleService;
 import com.simple.service.IUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,7 @@ import java.io.IOException;
 
 @Controller
 @RequestMapping("/user/")
+@Slf4j
 public class UserController {
 
     private final IUserService iUserService;
@@ -34,12 +36,12 @@ public class UserController {
     private final IArticleService iArticleService;
 
     @RequestMapping(value = "login.do", method = RequestMethod.POST)
-    public String login( String username, String password, HttpSession session,Model model,HttpServletResponse response) {
+    public String login(String username, String password, HttpSession session, Model model, HttpServletResponse response) {
         ServerResponse<User> userServerResponse = iUserService.login(username, password);
-        model.addAttribute("loginMessage",userServerResponse.getMsg());
+        model.addAttribute("loginMessage", userServerResponse.getMsg());
         if (userServerResponse.isSuccess()) {
-            ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(1,5);
-            session.setAttribute("pageInfoServerResponse",pageInfoServerResponse);
+            ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(1, 5);
+            session.setAttribute("pageInfoServerResponse", pageInfoServerResponse);
             session.setAttribute(Const.CURRENT_USER, userServerResponse.getData());
             try {
                 response.sendRedirect("/tables");
@@ -61,8 +63,8 @@ public class UserController {
     }
 
     //登出
-    @RequestMapping(value = "logout.do",method = RequestMethod.GET)
-    public void userLogout(HttpSession session, HttpServletResponse response){
+    @RequestMapping(value = "logout.do", method = RequestMethod.GET)
+    public void userLogout(HttpSession session, HttpServletResponse response) {
         session.removeAttribute(Const.CURRENT_USER);
         try {
             response.sendRedirect("/");
@@ -72,11 +74,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/checkLogin.do")
-    public String login(HttpSession session,Model model,HttpServletResponse response){
-        if (session.getAttribute(Const.CURRENT_USER) != null){
-            ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(1,5);
-            session.setAttribute("pageInfoServerResponse",pageInfoServerResponse);
-            model.addAttribute("pageInfoServerResponse",pageInfoServerResponse);
+    public String login(HttpSession session, Model model, HttpServletResponse response) {
+        if (session.getAttribute(Const.CURRENT_USER) != null) {
+            ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(1, 5);
+            session.setAttribute("pageInfoServerResponse", pageInfoServerResponse);
+            model.addAttribute("pageInfoServerResponse", pageInfoServerResponse);
             try {
                 response.sendRedirect("/tables");
             } catch (IOException e) {
@@ -84,5 +86,26 @@ public class UserController {
             }
         }
         return "/backstage/login";
+    }
+
+    // 注册
+    @RequestMapping(value = "register.do", method = RequestMethod.POST)
+    public String register(String username, String password1, String password2,String email) {
+        log.info("username:{},password1:{},password2:{}", username, password1, password2);
+        return "backstage/getEmailCode";
+    }
+
+    // 获取验证码
+    @RequestMapping(value = "get_email_code.do", method = RequestMethod.POST)
+    public String getEmailCode(){
+        log.info("get email code");
+        return "backstage/checkEmailCode";
+    }
+
+    // 验证验证码
+    @RequestMapping(value = "check_email_code.do",method = RequestMethod.POST)
+    @ResponseBody
+    public String checkEmailCode(){
+        return "ok";
     }
 }

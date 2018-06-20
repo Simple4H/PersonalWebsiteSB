@@ -14,8 +14,14 @@ CREATE TABLE `simple_user` (
   COMMENT '账号',
   `password`    varchar(50) NOT NULL
   COMMENT '密码',
+  `email`       varchar(50) not null
+  comment '邮箱',
+  `status`      int(10)     not null
+  comment '状态',
   `authority`   int(10)     default 0
   comment '权限',
+  `create_time` datetime    not null
+  comment '创建时间',
   `update_time` datetime    not null
   comment '最后一次登录时间',
   PRIMARY KEY (`id`),
