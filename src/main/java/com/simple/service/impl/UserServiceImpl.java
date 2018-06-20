@@ -47,12 +47,20 @@ public class UserServiceImpl implements IUserService {
 
     // 注册
     public ServerResponse register(String username, String password1, String password2, String email) {
-        if (StringUtils.equals(password1, password2)) {
+        if (password1.equals(password2)) {
             int usernameCount = userMapper.checkUsername(username);
-            if (usernameCount > 0){
+            if (usernameCount > 0) {
                 return ServerResponse.createByErrorMessage("用户名已经存在");
             }
-            userMapper
+            int emailCount = userMapper.checkEmail(email);
+            if (emailCount > 0) {
+                // TODO: 有bug
+                return ServerResponse.createByErrorMessage("邮箱已经存在");
+            }
+            if ((userMapper.register(username, password1, email) > 0)) {
+                return ServerResponse.createBySuccessMessage("注册成功");
+            }
+            return ServerResponse.createByErrorMessage("注册异常");
         }
         return ServerResponse.createByErrorMessage("两次密码不一致");
 

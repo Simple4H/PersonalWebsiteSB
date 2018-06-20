@@ -90,22 +90,26 @@ public class UserController {
 
     // 注册
     @RequestMapping(value = "register.do", method = RequestMethod.POST)
-    public String register(String username, String password1, String password2,String email) {
-        log.info("username:{},password1:{},password2:{}", username, password1, password2);
-        return "backstage/getEmailCode";
+    public String register(String username, String password1, String password2, String email, Model model) {
+        ServerResponse response = iUserService.register(username, password1, password2, email);
+        model.addAttribute("registerMessage", response.getMsg());
+        if (response.isSuccess()) {
+            return "backstage/login";
+        }
+        return "backstage/register";
     }
 
     // 获取验证码
     @RequestMapping(value = "get_email_code.do", method = RequestMethod.POST)
-    public String getEmailCode(){
+    public String getEmailCode() {
         log.info("get email code");
         return "backstage/checkEmailCode";
     }
 
     // 验证验证码
-    @RequestMapping(value = "check_email_code.do",method = RequestMethod.POST)
+    @RequestMapping(value = "check_email_code.do", method = RequestMethod.POST)
     @ResponseBody
-    public String checkEmailCode(){
+    public String checkEmailCode() {
         return "ok";
     }
 }

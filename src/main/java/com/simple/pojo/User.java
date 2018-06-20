@@ -1,24 +1,32 @@
 package com.simple.pojo;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class User implements Serializable {
+public class User {
     private Integer id;
 
     private String username;
 
     private String password;
 
+    private String email;
+
+    private Integer status;
+
     private Integer authority;
+
+    private Date createTime;
 
     private Date updateTime;
 
-    public User(Integer id, String username, String password, Integer authority, Date updateTime) {
+    public User(Integer id, String username, String password, String email, Integer status, Integer authority, Date createTime, Date updateTime) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.email = email;
+        this.status = status;
         this.authority = authority;
+        this.createTime = createTime;
         this.updateTime = updateTime;
     }
 
@@ -50,12 +58,36 @@ public class User implements Serializable {
         this.password = password == null ? null : password.trim();
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public Integer getAuthority() {
         return authority;
     }
 
     public void setAuthority(Integer authority) {
         this.authority = authority;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public Date getUpdateTime() {
