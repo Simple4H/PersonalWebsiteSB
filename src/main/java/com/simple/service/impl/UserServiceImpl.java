@@ -54,10 +54,10 @@ public class UserServiceImpl implements IUserService {
             }
             int emailCount = userMapper.checkEmail(email);
             if (emailCount > 0) {
-                // TODO: 有bug
                 return ServerResponse.createByErrorMessage("邮箱已经存在");
             }
             if ((userMapper.register(username, password1, email) > 0)) {
+                // TODO: 注册异常
                 return ServerResponse.createBySuccessMessage("注册成功");
             }
             return ServerResponse.createByErrorMessage("注册异常");

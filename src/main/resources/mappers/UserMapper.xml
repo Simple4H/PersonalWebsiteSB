@@ -146,14 +146,14 @@
         where username = #{username}
     </update>
 
-    <select id="checkEmail" parameterType="String" resultType="int">
-        select count (1)
+    <select id="checkEmail" resultType="int" parameterType="String">
+        select count(1)
         from simple_user
         where email = #{email}
     </select>
 
-    <insert id="register" parameterType="map">
+    <insert id="register" parameterType="com.simple.pojo.User">
         insert into simple_user values
-        (null ,username=#{username},password=#{password},email=#{email},status=2,null ,now(),now())
+        (null ,username=#{username},password=#{password},email=#{email},status=2,authority=0,now(),now())
     </insert>
 </mapper>
