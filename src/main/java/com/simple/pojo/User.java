@@ -30,7 +30,7 @@ public class User {
         this.updateTime = updateTime;
     }
 
-    public User() {
+    public User(String username, String password1, String email) {
         super();
     }
 

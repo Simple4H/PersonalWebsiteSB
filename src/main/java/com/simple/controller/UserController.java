@@ -94,7 +94,7 @@ public class UserController {
         ServerResponse response = iUserService.register(username, password1, password2, email);
         model.addAttribute("registerMessage", response.getMsg());
         if (response.isSuccess()) {
-            return "backstage/login";
+            return "backstage/getEmailCode";
         }
         return "backstage/register";
     }
@@ -102,6 +102,7 @@ public class UserController {
     // 获取验证码
     @RequestMapping(value = "get_email_code.do", method = RequestMethod.POST)
     public String getEmailCode() {
+        // TODO: 获取验证码
         log.info("get email code");
         return "backstage/checkEmailCode";
     }
@@ -110,6 +111,7 @@ public class UserController {
     @RequestMapping(value = "check_email_code.do", method = RequestMethod.POST)
     @ResponseBody
     public String checkEmailCode() {
+        // TODO: 验证验证码
         return "ok";
     }
 }
