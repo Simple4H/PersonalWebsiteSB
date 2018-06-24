@@ -5,13 +5,17 @@ import com.simple.common.Const;
 import com.simple.common.ServerResponse;
 import com.simple.pojo.User;
 import com.simple.service.IArticleService;
+import com.simple.service.IEmailService;
 import com.simple.service.IUserService;
+import com.simple.util.CookieUtil;
+import com.simple.util.RedisPoolUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -25,16 +29,21 @@ import java.io.IOException;
 @Slf4j
 public class UserController {
 
+    private final IEmailService iEmailService;
+
     private final IUserService iUserService;
 
     @Autowired
-    public UserController(IUserService iUserService, IArticleService iArticleService) {
+    public UserController(IUserService iUserService, IArticleService iArticleService, IEmailService iEmailService) {
         this.iUserService = iUserService;
         this.iArticleService = iArticleService;
+        this.iEmailService = iEmailService;
     }
 
     private final IArticleService iArticleService;
 
+    // TODO: 邮箱登录
+    // TODO: redis重写
     @RequestMapping(value = "login.do", method = RequestMethod.POST)
     public String login(String username, String password, HttpSession session, Model model, HttpServletResponse response) {
         ServerResponse<User> userServerResponse = iUserService.login(username, password);
@@ -52,6 +61,7 @@ public class UserController {
         return "backstage/login";
     }
 
+    // TODO: redis重写
     @RequestMapping(value = "get_user_info.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse getUserInfo(HttpSession session) {
@@ -90,10 +100,11 @@ public class UserController {
 
     // 注册
     @RequestMapping(value = "register.do", method = RequestMethod.POST)
-    public String register(String username, String password1, String password2, String email, Model model) {
-        ServerResponse response = iUserService.register(username, password1, password2, email);
-        model.addAttribute("registerMessage", response.getMsg());
-        if (response.isSuccess()) {
+    public String register(String username, String password1, String password2, String email, Model model, HttpServletResponse response) {
+        ServerResponse serverResponse = iUserService.register(username, password1, password2, email);
+        model.addAttribute("registerMessage", serverResponse.getMsg());
+        if (serverResponse.isSuccess()) {
+            CookieUtil.writeLoginToken(response,email);
             return "backstage/getEmailCode";
         }
         return "backstage/register";
@@ -101,17 +112,24 @@ public class UserController {
 
     // 获取验证码
     @RequestMapping(value = "get_email_code.do", method = RequestMethod.POST)
-    public String getEmailCode() {
+    public String getEmailCode(HttpServletRequest request) {
         // TODO: 获取验证码
-        log.info("get email code");
-        return "backstage/checkEmailCode";
+        String email = CookieUtil.readLoginToken(request);
+        ServerResponse response = iEmailService.sendEmail(email);
+        if (response.isSuccess()){
+            return "backstage/checkEmailCode";
+        }
+        return "error";
     }
 
     // 验证验证码
     @RequestMapping(value = "check_email_code.do", method = RequestMethod.POST)
-    @ResponseBody
-    public String checkEmailCode() {
-        // TODO: 验证验证码
-        return "ok";
+    public String checkEmailCode(String emailCode,HttpServletRequest request) {
+        String email = CookieUtil.readLoginToken(request);
+        ServerResponse serverResponse = iEmailService.checkEmailToken(emailCode,email);
+        if (serverResponse.isSuccess()){
+            return "backstage/login";
+        }
+        return "error";
     }
 }

@@ -5,7 +5,9 @@ import com.simple.common.ServerResponse;
 import com.simple.dao.UserMapper;
 import com.simple.pojo.User;
 import com.simple.service.IUserService;
+import com.simple.util.JsonUtil;
 import com.simple.util.MD5Util;
+import com.simple.util.RedisPoolUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,10 +58,18 @@ public class UserServiceImpl implements IUserService {
             if (emailCount > 0) {
                 return ServerResponse.createByErrorMessage("邮箱已经存在");
             }
-            if ((userMapper.register(username, password1, email) > 0)) {
-                return ServerResponse.createBySuccessMessage("注册成功");
+            // 没有验证的先保存到redis
+            User user = new User();
+            user.setUsername(username);
+            user.setPassword(MD5Util.MD5EncodeUtf8(password1));
+            user.setEmail(email);
+            String userString = JsonUtil.obj2String(user);
+            // 将注册好，但是未验证邮箱的账户存入redis
+            String result = RedisPoolUtil.setEx(email,Const.Redis_Time.REDIS_EXIST_TIME,userString);
+            if (StringUtils.equals(result,"OK")){
+                return ServerResponse.createBySuccessMessage("ok");
             }
-            return ServerResponse.createByErrorMessage("注册异常");
+            return ServerResponse.createByErrorMessage("error");
         }
         return ServerResponse.createByErrorMessage("两次密码不一致");
 

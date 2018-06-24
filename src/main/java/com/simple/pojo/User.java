@@ -1,8 +1,9 @@
 package com.simple.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+public class User implements Serializable {
     private Integer id;
 
     private String username;
@@ -28,6 +29,9 @@ public class User {
         this.authority = authority;
         this.createTime = createTime;
         this.updateTime = updateTime;
+    }
+
+    public User() {
     }
 
     public User(String username, String password1, String email) {

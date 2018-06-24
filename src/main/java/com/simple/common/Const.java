@@ -11,4 +11,10 @@ public class Const {
         int ROLE_ADMIN = 1; // 管理员
         int ROLE_CUSTOMER = 0; // 普通用户
     }
+
+    public interface Redis_Time {
+        int REDIS_EXIST_TIME = 60 * 5;
+        int REDIS_EMAIL_CODE_TIME = 60 * 5;
+    }
+
 }

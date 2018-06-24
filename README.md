@@ -23,5 +23,3 @@
 - 在[issue](https://github.com/simplecxm/PersonalWebsiteSB/issues)中进行讨论。
 
 - [留言](https://www.cxm520hyq.com/contact)告知我。
-
-todo 注册
