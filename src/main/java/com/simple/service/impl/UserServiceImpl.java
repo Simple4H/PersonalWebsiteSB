@@ -50,28 +50,36 @@ public class UserServiceImpl implements IUserService {
     // 注册
     public ServerResponse register(String username, String password1, String password2, String email) {
         if (password1.equals(password2)) {
-            int usernameCount = userMapper.checkUsername(username);
-            if (usernameCount > 0) {
-                return ServerResponse.createByErrorMessage("用户名已经存在");
+            ServerResponse checkResult = checkUsernameAndEmail(username, email);
+            if (checkResult.isSuccess()) {
+                // 没有验证的先保存到redis
+                User user = new User();
+                user.setUsername(username);
+                user.setPassword(MD5Util.MD5EncodeUtf8(password1));
+                user.setEmail(email);
+                String userString = JsonUtil.obj2String(user);
+                // 将注册好，但是未验证邮箱的账户存入redis
+                String result = RedisPoolUtil.setEx(email, Const.Redis_Time.REDIS_EXIST_TIME, userString);
+                if (StringUtils.equals(result, "OK")) {
+                    return ServerResponse.createBySuccessMessage("ok");
+                }
+                return ServerResponse.createByErrorMessage("error");
             }
-            int emailCount = userMapper.checkEmail(email);
-            if (emailCount > 0) {
-                return ServerResponse.createByErrorMessage("邮箱已经存在");
-            }
-            // 没有验证的先保存到redis
-            User user = new User();
-            user.setUsername(username);
-            user.setPassword(MD5Util.MD5EncodeUtf8(password1));
-            user.setEmail(email);
-            String userString = JsonUtil.obj2String(user);
-            // 将注册好，但是未验证邮箱的账户存入redis
-            String result = RedisPoolUtil.setEx(email,Const.Redis_Time.REDIS_EXIST_TIME,userString);
-            if (StringUtils.equals(result,"OK")){
-                return ServerResponse.createBySuccessMessage("ok");
-            }
-            return ServerResponse.createByErrorMessage("error");
+            return ServerResponse.createByErrorMessage(checkResult.getMsg());
         }
         return ServerResponse.createByErrorMessage("两次密码不一致");
+    }
 
+    // 封装验证账号密码
+    private ServerResponse checkUsernameAndEmail(String username, String email) {
+        int usernameCount = userMapper.checkUsername(username);
+        if (usernameCount > 0) {
+            return ServerResponse.createByErrorMessage("用户名已经存在");
+        }
+        int emailCount = userMapper.checkEmail(email);
+        if (emailCount > 0) {
+            return ServerResponse.createByErrorMessage("邮箱已经存在");
+        }
+        return ServerResponse.createBySuccessMessage("验证成功");
     }
 }
