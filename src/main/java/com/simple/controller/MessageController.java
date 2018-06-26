@@ -42,8 +42,10 @@ public class MessageController {
                 session.setAttribute("pageInfoMessage", pageInfoMessage);
                 return "backstage/messageShow";
             }
+            // 异常页面
             return "error";
         }
+        // 权限不足页面
         return "error2";
     }
     // TODO: 删除消息
