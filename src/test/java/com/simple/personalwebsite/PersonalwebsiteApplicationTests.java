@@ -11,12 +11,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class PersonalwebsiteApplicationTests {
 
     public static void main(String[] args) {
-        for (int i = 1; i <= 9; i++) {
-            for (int j = 1; j <= i; j = j + 1) {
-                System.out.print("i"+"j"+"="+i*j);
-                System.out.print("");
-            }
-            System.out.println();
+        for (int i = 0; i <= 10; i++) {
+            int token = (int) (Math.random() * 9000 + 1000);
+            log.info("result:{}", token);
         }
     }
 

@@ -52,6 +52,7 @@ public class EmailServiceImpl implements IEmailService {
         simpleMailMessage.setSubject("您好，欢迎注册~");
 
         // 发送内容
+        // 生成四位数的验证码
         int token = (int) (Math.random() * (9999 - 1000 + 1) + 1000);
         simpleMailMessage.setText("您的验证码是:" + token);
 
@@ -62,7 +63,6 @@ public class EmailServiceImpl implements IEmailService {
             RedisPoolUtil.setEx(email + "token", Const.Redis_Time.REDIS_EMAIL_CODE_TIME, tokenStr);
             return ServerResponse.createBySuccess("发送成功", token);
         } catch (MailException e) {
-            e.printStackTrace();
             log.error("发送邮件异常:{}", e);
             return ServerResponse.createBySuccessMessage("发送失败");
         }
@@ -84,9 +84,9 @@ public class EmailServiceImpl implements IEmailService {
                     }
                     return ServerResponse.createByErrorMessage("存入数据库异常");
                 }
-                return ServerResponse.createByErrorMessage("超时");
+                return ServerResponse.createByErrorMessage("超时，验证时间过长");
             }
-            return ServerResponse.createByErrorMessage("邮箱验证失败");
+            return ServerResponse.createByErrorMessage("验证码错误");
         }
         return ServerResponse.createByErrorMessage("验证码超时，请重新获取");
 

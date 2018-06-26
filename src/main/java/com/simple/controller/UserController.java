@@ -102,8 +102,10 @@ public class UserController {
     @RequestMapping(value = "register.do", method = RequestMethod.POST)
     public String register(String username, String password1, String password2, String email, Model model, HttpServletResponse response) {
         ServerResponse serverResponse = iUserService.register(username, password1, password2, email);
+        // 注册错误时候提示信息
         model.addAttribute("registerMessage", serverResponse.getMsg());
         if (serverResponse.isSuccess()) {
+            // 判定用户名与邮箱有效后，将邮箱存储至cookie
             CookieUtil.writeLoginToken(response,email);
             return "backstage/getEmailCode";
         }
@@ -113,8 +115,9 @@ public class UserController {
     // 获取验证码
     @RequestMapping(value = "get_email_code.do", method = RequestMethod.POST)
     public String getEmailCode(HttpServletRequest request) {
-        // TODO: 获取验证码
+        // 从cookie中获取登录注册时候的邮箱
         String email = CookieUtil.readLoginToken(request);
+        // 调用发送邮箱接口
         ServerResponse response = iEmailService.sendEmail(email);
         if (response.isSuccess()){
             return "backstage/checkEmailCode";
@@ -126,6 +129,8 @@ public class UserController {
     @RequestMapping(value = "check_email_code.do", method = RequestMethod.POST)
     public String checkEmailCode(String emailCode,HttpServletRequest request) {
         String email = CookieUtil.readLoginToken(request);
+        // 从cookie中获取登录注册时候的邮箱
+        // 为什么需要重新获取邮箱呢？因为生成验证码的时候是以邮箱作为key
         ServerResponse serverResponse = iEmailService.checkEmailToken(emailCode,email);
         if (serverResponse.isSuccess()){
             return "backstage/login";
