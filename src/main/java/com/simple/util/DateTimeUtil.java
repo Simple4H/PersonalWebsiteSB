@@ -11,7 +11,7 @@ import java.util.Date;
  * Create by S I M P L E on 2018/04/10 18:16:03
  */
 public class DateTimeUtil {
-    public static final String STANDARD_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    static final String STANDARD_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     public static Date strToDate(String dateTimeStr, String formatStr) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(formatStr);
