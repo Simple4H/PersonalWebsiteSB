@@ -43,7 +43,7 @@
     <logger name="com.simple.dao" level="DEBUG"/>
 
     <!-- 日志输出级别 -->
-    <root level="INFO"> <!-- 此时debug级别的信息会被过滤 -->
+    <root level="ERROR"> <!-- 此时debug级别的信息会被过滤 -->
         <appender-ref ref="console" />
         <appender-ref ref="file" />
     </root>
