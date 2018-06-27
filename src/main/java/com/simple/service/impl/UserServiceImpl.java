@@ -26,8 +26,8 @@ public class UserServiceImpl implements IUserService {
     }
 
     public ServerResponse<User> login(String username, String password) {
-        int usernameResult = userMapper.checkUsername(username);
-        if (usernameResult > 0) {
+        ServerResponse checkResult = loginCheckUsernameAndEmail(username);
+        if (checkResult.isSuccess()) {
             String md5Password = MD5Util.MD5EncodeUtf8(password);
             User user = userMapper.checkUsernameAndPassword(username, md5Password);
             if (user != null) {
@@ -37,7 +37,7 @@ public class UserServiceImpl implements IUserService {
             }
             return ServerResponse.createByErrorMessage("密码错误");
         }
-        return ServerResponse.createByErrorMessage("用户名不存在");
+        return ServerResponse.createByErrorMessage(checkResult.getMsg());
     }
 
     public ServerResponse checkUserAuthority(User user) {
@@ -81,5 +81,18 @@ public class UserServiceImpl implements IUserService {
             return ServerResponse.createByErrorMessage("邮箱已经存在");
         }
         return ServerResponse.createBySuccessMessage("验证成功");
+    }
+
+    // 封装验证登录用户名或邮箱
+    private ServerResponse loginCheckUsernameAndEmail(String login){
+        int isUsername = userMapper.checkUsername(login);
+        if (isUsername > 0){
+            return ServerResponse.createBySuccessMessage("用户名校验成功");
+        }
+        int isEmail = userMapper.checkEmail(login);
+        if (isEmail > 0) {
+            return ServerResponse.createBySuccessMessage("邮箱验证成功");
+        }
+        return ServerResponse.createByErrorMessage("用户名与邮箱都不存在");
     }
 }

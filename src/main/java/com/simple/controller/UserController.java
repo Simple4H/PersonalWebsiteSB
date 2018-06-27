@@ -8,7 +8,6 @@ import com.simple.service.IArticleService;
 import com.simple.service.IEmailService;
 import com.simple.service.IUserService;
 import com.simple.util.CookieUtil;
-import com.simple.util.RedisPoolUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
