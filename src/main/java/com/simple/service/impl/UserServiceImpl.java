@@ -26,18 +26,26 @@ public class UserServiceImpl implements IUserService {
     }
 
     public ServerResponse<User> login(String username, String password) {
-        ServerResponse checkResult = loginCheckUsernameAndEmail(username);
-        if (checkResult.isSuccess()) {
-            String md5Password = MD5Util.MD5EncodeUtf8(password);
+        String md5Password = MD5Util.MD5EncodeUtf8(password);
+        // 用户名登录
+        int isUsername = userMapper.checkUsername(username);
+        if (isUsername > 0) {
             User user = userMapper.checkUsernameAndPassword(username, md5Password);
             if (user != null) {
-                user.setPassword(StringUtils.EMPTY);
-                userMapper.updateUserLoginTime(username);
                 return ServerResponse.createBySuccess("登录成功", user);
             }
             return ServerResponse.createByErrorMessage("密码错误");
         }
-        return ServerResponse.createByErrorMessage(checkResult.getMsg());
+        // 邮箱登录
+        int isEmail = userMapper.checkEmail(username);
+        if (isEmail > 0) {
+            User user = userMapper.checkEmailAndPassword(username, md5Password);
+            if (user != null) {
+                return ServerResponse.createBySuccess("登录成功", user);
+            }
+            return ServerResponse.createByErrorMessage("密码错误");
+        }
+        return ServerResponse.createByErrorMessage("用户名不存在");
     }
 
     public ServerResponse checkUserAuthority(User user) {
@@ -81,18 +89,5 @@ public class UserServiceImpl implements IUserService {
             return ServerResponse.createByErrorMessage("邮箱已经存在");
         }
         return ServerResponse.createBySuccessMessage("验证成功");
-    }
-
-    // 封装验证登录用户名或邮箱
-    private ServerResponse loginCheckUsernameAndEmail(String login){
-        int isUsername = userMapper.checkUsername(login);
-        if (isUsername > 0){
-            return ServerResponse.createBySuccessMessage("用户名校验成功");
-        }
-        int isEmail = userMapper.checkEmail(login);
-        if (isEmail > 0) {
-            return ServerResponse.createBySuccessMessage("邮箱验证成功");
-        }
-        return ServerResponse.createByErrorMessage("用户名与邮箱都不存在");
     }
 }
