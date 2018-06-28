@@ -23,3 +23,7 @@
 - 在[issue](https://github.com/simplecxm/PersonalWebsiteSB/issues)中进行讨论。
 
 - [留言](https://www.cxm520hyq.com/contact)告知我。
+
+### 更新日志
+- 添加注册
+- 完善日志文件
