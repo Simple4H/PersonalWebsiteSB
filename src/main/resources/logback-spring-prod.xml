@@ -33,14 +33,14 @@
         </encoder>
     </appender>
     <!-- 日志logger(包.类)的输出级别 -->
-    <logger name="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver" level="DEBUG" >
+    <logger name="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver" level="ERROR" >
         <appender-ref ref="console" />
         <appender-ref ref="file" />
     </logger>
-    <logger name="org.springframework.boot" level="DEBUG"/>
+    <logger name="org.springframework.boot" level="ERROR"/>
 
     <!-- 数据库连接日志 -->
-    <logger name="com.simple.dao" level="DEBUG"/>
+    <logger name="com.simple.dao" level="ERROR"/>
 
     <!-- 日志输出级别 -->
     <root level="ERROR"> <!-- 此时debug级别的信息会被过滤 -->
