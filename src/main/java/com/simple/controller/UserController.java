@@ -41,7 +41,6 @@ public class UserController {
 
     private final IArticleService iArticleService;
 
-    // TODO: 邮箱登录
     // TODO: redis重写
     @RequestMapping(value = "login.do", method = RequestMethod.POST)
     public String login(String username, String password, HttpSession session, Model model, HttpServletResponse response) {
