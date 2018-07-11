@@ -30,3 +30,4 @@
 
 todo 脚本发布
 todo 毕业设计
+todo 一致性hash算法
