@@ -28,6 +28,8 @@ import java.io.IOException;
 @Slf4j
 public class UserController {
 
+    // TODO: 分布式的登录
+
     private final IEmailService iEmailService;
 
     private final IUserService iUserService;

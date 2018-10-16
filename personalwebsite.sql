@@ -6,7 +6,7 @@ create Database db_personalwebsite
   COLLATE utf8_general_ci;
 use db_personalwebsite;
 
-
+-- 用户表
 CREATE TABLE `simple_user` (
   `id`          int(11)     NOT NULL AUTO_INCREMENT
   COMMENT '管理员表id',
@@ -31,7 +31,7 @@ CREATE TABLE `simple_user` (
   AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8;
 
-
+-- 消息表
 CREATE TABLE `simple_message` (
   `id`          int(11)      NOT NULL AUTO_INCREMENT
   COMMENT '信息表id',
@@ -51,6 +51,7 @@ CREATE TABLE `simple_message` (
   AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8;
 
+-- 文章表
 CREATE TABLE `simple_article` (
   `id`          int(11)        NOT NULL AUTO_INCREMENT
   COMMENT '文章表id',
