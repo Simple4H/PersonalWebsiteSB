@@ -6,10 +6,14 @@ import com.simple.common.Const;
 import com.simple.common.ServerResponse;
 import com.simple.pojo.User;
 import com.simple.service.IMessageService;
+import com.simple.util.CookieUtil;
+import com.simple.util.JsonUtil;
+import com.simple.util.RedisPoolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -34,8 +38,10 @@ public class MessageController {
     }
 
     @RequestMapping(value = "get_all_message.do", method = RequestMethod.GET)
-    public String getAllMessage(HttpSession session, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "5") int pageSize) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public String getAllMessage(HttpSession session, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, HttpServletRequest request) {
+        String loginToken = CookieUtil.readLoginToken(request);
+        String userString = RedisPoolUtil.get(loginToken);
+        User user = JsonUtil.string2Obj(userString, User.class);
         if (user.getAuthority() == Const.Role.ROLE_ADMIN) {
             ServerResponse<PageInfo> pageInfoMessage = iMessageService.getAllMessage(pageNum, pageSize);
             if (pageInfoMessage.isSuccess()) {
