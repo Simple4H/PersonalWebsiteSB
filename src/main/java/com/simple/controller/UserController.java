@@ -55,8 +55,8 @@ public class UserController {
             session.setAttribute("pageInfoServerResponse", pageInfoServerResponse);
             CookieUtil.writeLoginToken(response, session.getId());
             RedisPoolUtil.setEx(session.getId(), 60 * 60 * 24, JsonUtil.obj2String(userServerResponse.getData()));
-            // 保存登录时间
-            model.addAttribute("loginTime", userServerResponse.getData().getUpdateTime());
+//            // 保存登录时间
+//            model.addAttribute("UserLoginTime", "abc");
             try {
                 response.sendRedirect("/tables");
             } catch (IOException e) {
