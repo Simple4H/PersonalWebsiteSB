@@ -89,7 +89,7 @@ public class UserController {
     }
 
     // 检查登录信息
-    @RequestMapping(value = "/checkLogin.do")
+    @RequestMapping(value = "checkLogin.do")
     public String login(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response) {
         String loginToken = CookieUtil.readLoginToken(request);
         if (!StringUtils.isEmpty(loginToken)) {
