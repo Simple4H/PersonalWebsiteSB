@@ -42,6 +42,7 @@ public class MessageController {
         String loginToken = CookieUtil.readLoginToken(request);
         String userString = RedisPoolUtil.get(loginToken);
         User user = JsonUtil.string2Obj(userString, User.class);
+        assert user != null;
         if (user.getAuthority() == Const.Role.ROLE_ADMIN) {
             ServerResponse<PageInfo> pageInfoMessage = iMessageService.getAllMessage(pageNum, pageSize);
             if (pageInfoMessage.isSuccess()) {

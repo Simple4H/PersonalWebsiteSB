@@ -1,7 +1,6 @@
 package com.simple.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.simple.common.Const;
 import com.simple.common.ServerResponse;
 import com.simple.pojo.User;
 import com.simple.service.IArticleService;

@@ -1,7 +1,6 @@
 package com.simple.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.simple.common.Const;
 import com.simple.common.ServerResponse;
 import com.simple.pojo.Article;
 import com.simple.pojo.User;
@@ -75,7 +74,7 @@ public class ArticleController {
     // 后台--添加新的文章
     @RequestMapping(value = "/article/create_new_article.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse createNewArticle(String title, String context, HttpSession session, HttpServletRequest request) {
+    public ServerResponse createNewArticle(String title, String context, HttpServletRequest request) {
         String loginToken = CookieUtil.readLoginToken(request);
         String userString = RedisPoolUtil.get(loginToken);
         User user = JsonUtil.string2Obj(userString, User.class);
