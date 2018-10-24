@@ -101,7 +101,7 @@ public class UserController {
                 e.printStackTrace();
             }
         }
-        return "/backstage/login";
+        return "backstage/login";
     }
 
     // 注册
