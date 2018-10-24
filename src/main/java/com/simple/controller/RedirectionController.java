@@ -24,22 +24,22 @@ public class RedirectionController {
 
     @RequestMapping(value = "/addArticle")
     public String addArticle() {
-        return "/backstage/addArticle";
+        return "backstage/addArticle";
     }
 
     @RequestMapping(value = "/tables")
     public String tables() {
-        return "/backstage/tables";
+        return "backstage/tables";
     }
 
     @RequestMapping(value = "/messageEdit")
     public String messageEdit() {
-        return "/backstage/messageEdit";
+        return "backstage/messageEdit";
     }
 
     @RequestMapping(value = "/register")
     public String register(){
-        return "/backstage/register";
+        return "backstage/register";
     }
 
 }

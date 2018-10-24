@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class CookieUtil {
     // 生效的域名
-    private final static String COOKIE_DOMAIN = "localhost";
+    private final static String COOKIE_DOMAIN = "www.test.com";
 
     // cookie名字
     private final static String COOKIE_NAME = "simple_register_redis";
