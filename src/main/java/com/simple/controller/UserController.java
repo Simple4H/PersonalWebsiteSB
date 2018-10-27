@@ -134,12 +134,14 @@ public class UserController {
 
     // 验证验证码
     @RequestMapping(value = "check_email_code.do", method = RequestMethod.POST)
-    public String checkEmailCode(String emailCode, HttpServletRequest request) {
+    public String checkEmailCode(String emailCode, HttpServletRequest request, HttpServletResponse response) {
         String email = CookieUtil.readLoginToken(request);
         // 从cookie中获取登录注册时候的邮箱
         // 为什么需要重新获取邮箱呢？因为生成验证码的时候是以邮箱作为key
         ServerResponse serverResponse = iEmailService.checkEmailToken(emailCode, email);
         if (serverResponse.isSuccess()) {
+            // 注册完后删除了cookie
+            CookieUtil.delLoginToken(request, response);
             return "backstage/login";
         }
         return "error";
