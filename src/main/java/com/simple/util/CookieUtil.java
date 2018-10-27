@@ -1,5 +1,6 @@
 package com.simple.util;
 
+import com.simple.common.Const;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
@@ -26,7 +27,7 @@ public class CookieUtil {
         // 防止脚本攻击
         ck.setHttpOnly(true);
         // 如果maxAge不设置，cookie就不会写入硬盘，而是写在内存，只是在当前页有效。-1代表永久
-        ck.setMaxAge(60 * 5);
+        ck.setMaxAge(Const.Cookie_Time.COOKIE_EXIST_TIME);
         log.info("write cookieName:{}, cookieValue:{}", ck.getName(), ck.getValue());
         response.addCookie(ck);
     }

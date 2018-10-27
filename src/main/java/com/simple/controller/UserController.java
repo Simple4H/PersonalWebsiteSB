@@ -1,6 +1,7 @@
 package com.simple.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.simple.common.Const;
 import com.simple.common.ServerResponse;
 import com.simple.pojo.User;
 import com.simple.service.IArticleService;
@@ -53,7 +54,7 @@ public class UserController {
             ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(1, 5);
             session.setAttribute("pageInfoServerResponse", pageInfoServerResponse);
             CookieUtil.writeLoginToken(response, session.getId());
-            RedisPoolUtil.setEx(session.getId(), 60 * 60 * 24, JsonUtil.obj2String(userServerResponse.getData()));
+            RedisPoolUtil.setEx(session.getId(), Const.Redis_Time.REDIS_COOKIE_EXIST_TIME, JsonUtil.obj2String(userServerResponse.getData()));
 //            // 保存登录时间
 //            model.addAttribute("UserLoginTime", "abc");
             try {

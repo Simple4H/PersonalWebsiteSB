@@ -13,8 +13,15 @@ public class Const {
     }
 
     public interface Redis_Time {
-        int REDIS_EXIST_TIME = 60 * 5;
+        // cookie缓存
+        int REDIS_COOKIE_EXIST_TIME = 60 * 60 * 24 * 7;
+        // 邮件验证码缓存
+        int REDIS_EMAIL_EXIST_TIME = 60 * 5;
         int REDIS_EMAIL_CODE_TIME = 60 * 5;
+    }
+
+    public interface Cookie_Time {
+        int COOKIE_EXIST_TIME = 60 * 60 * 24 * 7;
     }
 
 }
