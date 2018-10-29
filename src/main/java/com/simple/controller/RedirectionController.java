@@ -2,7 +2,6 @@ package com.simple.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 
 /**
@@ -38,8 +37,13 @@ public class RedirectionController {
     }
 
     @RequestMapping(value = "/register")
-    public String register(){
+    public String register() {
         return "backstage/register";
+    }
+
+    @RequestMapping(value = "test")
+    public String test() {
+        return "test";
     }
 
 }
