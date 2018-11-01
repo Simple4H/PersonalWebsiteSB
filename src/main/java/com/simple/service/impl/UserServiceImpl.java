@@ -67,7 +67,7 @@ public class UserServiceImpl implements IUserService {
                 user.setEmail(email);
                 String userString = JsonUtil.obj2String(user);
                 // 将注册好，但是未验证邮箱的账户存入redis
-                String result = RedisPoolUtil.setEx(email, Const.Redis_Time.REDIS_EXIST_TIME, userString);
+                String result = RedisPoolUtil.setEx(email, Const.Redis_Time.REDIS_EMAIL_EXIST_TIME, userString);
                 if (StringUtils.equals(result, "OK")) {
                     return ServerResponse.createBySuccessMessage("ok");
                 }

@@ -1,18 +1,21 @@
 package com.simple.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.simple.common.Const;
 import com.simple.common.ServerResponse;
 import com.simple.pojo.Article;
 import com.simple.pojo.User;
 import com.simple.service.IArticleService;
 import com.simple.service.IUserService;
+import com.simple.util.CookieUtil;
+import com.simple.util.JsonUtil;
+import com.simple.util.RedisPoolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.simple.vo.ArticleVo;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -71,8 +74,10 @@ public class ArticleController {
     // 后台--添加新的文章
     @RequestMapping(value = "/article/create_new_article.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse createNewArticle(String title, String context, HttpSession session) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse createNewArticle(String title, String context, HttpServletRequest request) {
+        String loginToken = CookieUtil.readLoginToken(request);
+        String userString = RedisPoolUtil.get(loginToken);
+        User user = JsonUtil.string2Obj(userString, User.class);
         if (iUserService.checkUserAuthority(user).isSuccess()) {
             ServerResponse serverResponse = iArticleService.createNewArticle(title, context);
             if (serverResponse.isSuccess()) {
@@ -85,8 +90,10 @@ public class ArticleController {
 
     // 后台--删除文章
     @RequestMapping(value = "/article/delete_article.do", method = RequestMethod.GET)
-    public String deleteArticle(String title, @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, HttpSession session) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public String deleteArticle(String title, @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, HttpSession session, HttpServletRequest request) {
+        String loginToken = CookieUtil.readLoginToken(request);
+        String userString = RedisPoolUtil.get(loginToken);
+        User user = JsonUtil.string2Obj(userString, User.class);
         if (iUserService.checkUserAuthority(user).isSuccess()) {
             ServerResponse serverResponse = iArticleService.deleteArticle(title);
             if (serverResponse.isSuccess()) {
@@ -98,7 +105,7 @@ public class ArticleController {
             }
             return "backstage/tables";
         }
-        return "/error2";
+        return "error2";
     }
 
     // 后台--编辑文章
@@ -115,8 +122,10 @@ public class ArticleController {
     // 后台--提交编辑文章
     @RequestMapping(value = "/article/edit_submit.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse editSubmit(String title, String content, @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, HttpSession session) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse editSubmit(String title, String content, @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, HttpSession session, HttpServletRequest request) {
+        String loginToken = CookieUtil.readLoginToken(request);
+        String userString = RedisPoolUtil.get(loginToken);
+        User user = JsonUtil.string2Obj(userString, User.class);
         if (iUserService.checkUserAuthority(user).isSuccess()) {
             ServerResponse<Article> article = (ServerResponse<Article>) session.getAttribute("articleByTitle");
             Integer id = article.getData().getId();
