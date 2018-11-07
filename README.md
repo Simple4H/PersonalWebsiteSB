@@ -32,3 +32,4 @@
 todo 脚本发布
 todo 修复显示bug
 todo 消息的删除
+todo redis分布式
