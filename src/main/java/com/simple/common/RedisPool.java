@@ -31,10 +31,10 @@ public class RedisPool {
     private static Boolean testOnReturn = Boolean.parseBoolean(PropertiesUtil.getProperty("redis.return", "false"));
 
     // redis IP
-    private static String redisIp = PropertiesUtil.getProperty("redis.ip");
+    private static String redisIp = PropertiesUtil.getProperty("redis.ip1");
 
     // redis port
-    private static Integer redisPort = Integer.parseInt(Objects.requireNonNull(PropertiesUtil.getProperty("redis.port")));
+    private static Integer redisPort = Integer.parseInt(Objects.requireNonNull(PropertiesUtil.getProperty("redis.port1")));
 
 
     // 初始化连接池
