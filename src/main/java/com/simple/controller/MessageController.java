@@ -8,7 +8,7 @@ import com.simple.pojo.User;
 import com.simple.service.IMessageService;
 import com.simple.util.CookieUtil;
 import com.simple.util.JsonUtil;
-import com.simple.util.RedisPoolUtil;
+import com.simple.util.RedisShardedPoolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +40,7 @@ public class MessageController {
     @RequestMapping(value = "get_all_message.do", method = RequestMethod.GET)
     public String getAllMessage(HttpSession session, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, HttpServletRequest request) {
         String loginToken = CookieUtil.readLoginToken(request);
-        String userString = RedisPoolUtil.get(loginToken);
+        String userString = RedisShardedPoolUtil.get(loginToken);
         User user = JsonUtil.string2Obj(userString, User.class);
         assert user != null;
         if (user.getAuthority() == Const.Role.ROLE_ADMIN) {

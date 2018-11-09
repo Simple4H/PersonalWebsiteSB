@@ -9,7 +9,7 @@ import com.simple.service.IEmailService;
 import com.simple.service.IUserService;
 import com.simple.util.CookieUtil;
 import com.simple.util.JsonUtil;
-import com.simple.util.RedisPoolUtil;
+import com.simple.util.RedisShardedPoolUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +54,7 @@ public class UserController {
             ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(1, 5);
             session.setAttribute("pageInfoServerResponse", pageInfoServerResponse);
             CookieUtil.writeLoginToken(response, session.getId());
-            RedisPoolUtil.setEx(session.getId(), Const.Redis_Time.REDIS_COOKIE_EXIST_TIME, JsonUtil.obj2String(userServerResponse.getData()));
+            RedisShardedPoolUtil.setEx(session.getId(), Const.Redis_Time.REDIS_COOKIE_EXIST_TIME, JsonUtil.obj2String(userServerResponse.getData()));
 //            // 保存登录时间
 //            model.addAttribute("UserLoginTime", "abc");
             try {
@@ -72,7 +72,7 @@ public class UserController {
     public ServerResponse getUserInfo(HttpServletRequest request) {
         String loginToken = CookieUtil.readLoginToken(request);
         if (!StringUtils.isEmpty(loginToken)) {
-            String userString = RedisPoolUtil.get(loginToken);
+            String userString = RedisShardedPoolUtil.get(loginToken);
             User user = JsonUtil.string2Obj(userString, User.class);
             return ServerResponse.createBySuccess("获取成功", user);
         }
@@ -84,7 +84,7 @@ public class UserController {
     public String userLogout(HttpServletRequest request, HttpServletResponse response) {
         String loginToken = CookieUtil.readLoginToken(request);
         CookieUtil.delLoginToken(request, response);
-        RedisPoolUtil.del(loginToken);
+        RedisShardedPoolUtil.del(loginToken);
         return "redirect:/";
     }
 

@@ -8,7 +8,7 @@ import com.simple.service.IArticleService;
 import com.simple.service.IUserService;
 import com.simple.util.CookieUtil;
 import com.simple.util.JsonUtil;
-import com.simple.util.RedisPoolUtil;
+import com.simple.util.RedisShardedPoolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -76,7 +76,7 @@ public class ArticleController {
     @ResponseBody
     public ServerResponse createNewArticle(String title, String context, HttpServletRequest request) {
         String loginToken = CookieUtil.readLoginToken(request);
-        String userString = RedisPoolUtil.get(loginToken);
+        String userString = RedisShardedPoolUtil.get(loginToken);
         User user = JsonUtil.string2Obj(userString, User.class);
         if (iUserService.checkUserAuthority(user).isSuccess()) {
             ServerResponse serverResponse = iArticleService.createNewArticle(title, context);
@@ -92,7 +92,7 @@ public class ArticleController {
     @RequestMapping(value = "/article/delete_article.do", method = RequestMethod.GET)
     public String deleteArticle(String title, @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, HttpSession session, HttpServletRequest request) {
         String loginToken = CookieUtil.readLoginToken(request);
-        String userString = RedisPoolUtil.get(loginToken);
+        String userString = RedisShardedPoolUtil.get(loginToken);
         User user = JsonUtil.string2Obj(userString, User.class);
         if (iUserService.checkUserAuthority(user).isSuccess()) {
             ServerResponse serverResponse = iArticleService.deleteArticle(title);
@@ -124,7 +124,7 @@ public class ArticleController {
     @ResponseBody
     public ServerResponse editSubmit(String title, String content, @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, HttpSession session, HttpServletRequest request) {
         String loginToken = CookieUtil.readLoginToken(request);
-        String userString = RedisPoolUtil.get(loginToken);
+        String userString = RedisShardedPoolUtil.get(loginToken);
         User user = JsonUtil.string2Obj(userString, User.class);
         if (iUserService.checkUserAuthority(user).isSuccess()) {
             ServerResponse<Article> article = (ServerResponse<Article>) session.getAttribute("articleByTitle");
