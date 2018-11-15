@@ -11,4 +11,6 @@ public interface IMessageService {
     ServerResponse<String> uploadWebsiteMessage(String name, String email, String phone, String message);
 
     ServerResponse<PageInfo> getAllMessage(int pageNum, int pageSize);
+
+    ServerResponse deleteMessage(String message, String phone);
 }

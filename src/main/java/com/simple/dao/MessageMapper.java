@@ -18,9 +18,11 @@ public interface MessageMapper {
 
     int updateByPrimaryKey(Message record);
 
-    int uploadMessage(@Param("name") String name, @Param("email")String email, @Param("phone")String phone, @Param("message")String message);
+    int uploadMessage(@Param("name") String name, @Param("email") String email, @Param("phone") String phone, @Param("message") String message);
 
     List<Message> getAllMessage();
+
+    int deleteMessage(@Param("message") String message, @Param("phone") String phone);
 
 
 }

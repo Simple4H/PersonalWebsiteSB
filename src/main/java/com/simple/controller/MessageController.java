@@ -56,4 +56,11 @@ public class MessageController {
         return "error2";
     }
     // TODO: 删除消息
+
+    @RequestMapping(value = "deleteMessage.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse deleteMessage(String message, String phone) {
+        return iMessageService.deleteMessage(message, phone);
+    }
+
 }

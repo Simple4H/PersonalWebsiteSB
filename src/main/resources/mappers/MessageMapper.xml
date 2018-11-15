@@ -116,4 +116,8 @@
         from simple_message
         order by create_time desc
     </select>
+
+    <delete id="deleteMessage" parameterType="int">
+        delete from simple_message where message=#{message} and phone=#{phone}
+    </delete>
 </mapper>
