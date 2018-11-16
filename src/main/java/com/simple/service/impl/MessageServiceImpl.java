@@ -40,8 +40,8 @@ public class MessageServiceImpl implements IMessageService {
         return ServerResponse.createBySuccess("查询成功", pageInfo);
     }
 
-    public ServerResponse deleteMessage(String message, String phone) {
-        int resultCount = messageMapper.deleteMessage(message, phone);
+    public ServerResponse deleteMessage(String name, String phone) {
+        int resultCount = messageMapper.deleteMessage(name, phone);
         if (resultCount > 0) {
             return ServerResponse.createBySuccessMessage("删除成功");
         }

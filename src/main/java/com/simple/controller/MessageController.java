@@ -59,8 +59,8 @@ public class MessageController {
 
     @RequestMapping(value = "deleteMessage.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse deleteMessage(String message, String phone) {
-        return iMessageService.deleteMessage(message, phone);
+    public ServerResponse deleteMessage(String name, String phone) {
+        return iMessageService.deleteMessage(name, phone);
     }
 
 }

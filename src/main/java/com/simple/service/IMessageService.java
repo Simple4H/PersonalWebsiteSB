@@ -12,5 +12,5 @@ public interface IMessageService {
 
     ServerResponse<PageInfo> getAllMessage(int pageNum, int pageSize);
 
-    ServerResponse deleteMessage(String message, String phone);
+    ServerResponse deleteMessage(String name, String phone);
 }
