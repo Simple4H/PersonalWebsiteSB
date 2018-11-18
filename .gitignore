@@ -5,6 +5,8 @@
 # IntelliJ project files
 .idea
 *.iml
+.vscode
+.settings
 /target
 out
 gen### Java template
