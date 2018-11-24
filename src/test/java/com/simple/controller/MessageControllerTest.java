@@ -16,6 +16,6 @@ public class MessageControllerTest {
 
     @Test
     public void deleteMessage() {
-        iMessageService.deleteMessage("");
+
     }
 }
