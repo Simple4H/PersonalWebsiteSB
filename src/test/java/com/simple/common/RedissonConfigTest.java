@@ -14,7 +14,7 @@ public class RedissonConfigTest {
 
     @Test
     public void Redisson() {
-        RLock lock = RedissonConfig.getRedisson().getLock("test");
+        RLock lock = RedissonConfig.getRedisson().getLock(Const.Redisson_Name.REDISSON_NAME);
         boolean getLock = false;
         try {
             getLock = lock.tryLock(2, 5, TimeUnit.SECONDS);

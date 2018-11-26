@@ -1,6 +1,8 @@
 package com.simple.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.simple.common.Const;
+import com.simple.common.RedissonConfig;
 import com.simple.common.ServerResponse;
 import com.simple.pojo.Article;
 import com.simple.pojo.User;
@@ -9,6 +11,8 @@ import com.simple.service.IUserService;
 import com.simple.util.CookieUtil;
 import com.simple.util.JsonUtil;
 import com.simple.util.RedisShardedPoolUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +22,15 @@ import com.simple.vo.ArticleVo;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Create by S I M P L E on 2018/03/31 10:33:50
  */
 
+@SuppressWarnings("ALL")
 @Controller
+@Slf4j
 public class ArticleController {
 
 
@@ -123,23 +130,38 @@ public class ArticleController {
     @RequestMapping(value = "/article/edit_submit.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse editSubmit(String title, String content, @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, HttpSession session, HttpServletRequest request) {
-        String loginToken = CookieUtil.readLoginToken(request);
-        String userString = RedisShardedPoolUtil.get(loginToken);
-        User user = JsonUtil.string2Obj(userString, User.class);
-        if (iUserService.checkUserAuthority(user).isSuccess()) {
-            ServerResponse<Article> article = (ServerResponse<Article>) session.getAttribute("articleByTitle");
-            Integer id = article.getData().getId();
-            ServerResponse serverResponse = iArticleService.updateArticleByTitle(title, content, id);
-            if (serverResponse.isSuccess()) {
-                ServerResponse<PageInfo> a = (ServerResponse<PageInfo>) session.getAttribute("pageInfoServerResponse");
-                int pageNum = a.getData().getPageNum();
-                ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(pageNum, pageSize);
-                session.setAttribute("pageInfoServerResponse", pageInfoServerResponse);
-                session.removeAttribute("articleByTitle");
-                return serverResponse;
+        // 分布式锁
+        RLock lock = RedissonConfig.getRedisson().getLock(Const.Redisson_Name.REDISSON_NAME);
+        boolean getLock = false;
+        try {
+            getLock = lock.tryLock(2, 2, TimeUnit.SECONDS);
+            if (getLock) {
+                log.info("获取到了分布式锁，开始执行相关操作");
+                String loginToken = CookieUtil.readLoginToken(request);
+                String userString = RedisShardedPoolUtil.get(loginToken);
+                User user = JsonUtil.string2Obj(userString, User.class);
+                if (iUserService.checkUserAuthority(user).isSuccess()) {
+                    ServerResponse<Article> article = (ServerResponse<Article>) session.getAttribute("articleByTitle");
+                    Integer id = article.getData().getId();
+                    ServerResponse serverResponse = iArticleService.updateArticleByTitle(title, content, id);
+                    if (serverResponse.isSuccess()) {
+                        ServerResponse<PageInfo> a = (ServerResponse<PageInfo>) session.getAttribute("pageInfoServerResponse");
+                        int pageNum = a.getData().getPageNum();
+                        ServerResponse<PageInfo> pageInfoServerResponse = iArticleService.getAllArticleList(pageNum, pageSize);
+                        session.setAttribute("pageInfoServerResponse", pageInfoServerResponse);
+                        session.removeAttribute("articleByTitle");
+                        return serverResponse;
+                    }
+                    return serverResponse;
+                }
+                return ServerResponse.createByErrorMessage("权限不够哟，无法编辑文章~");
+            } else {
+                log.error("获取分布式锁失败:{},ThreadName:{}", Const.Redisson_Name.REDISSON_NAME, Thread.currentThread().getName());
             }
-            return serverResponse;
+        } catch (InterruptedException e) {
+            log.error("分布式锁异常:{},ThreadName:{}", e, Thread.currentThread().getName());
         }
-        return ServerResponse.createByErrorMessage("权限不够哟，无法编辑文章~");
+        return ServerResponse.createByErrorMessage("分布式异常！！！");
     }
+
 }

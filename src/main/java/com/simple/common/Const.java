@@ -22,4 +22,9 @@ public class Const {
         int COOKIE_EXIST_TIME = 60 * 60 * 24 * 7;
     }
 
+    public interface Redisson_Name {
+        String REDISSON_NAME = "REDISSON_LOCK_NAME";
+    }
+
+
 }

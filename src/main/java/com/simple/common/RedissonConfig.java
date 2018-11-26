@@ -15,17 +15,16 @@ import java.util.Objects;
 @Slf4j
 public class RedissonConfig {
 
-    private static String redisIp = PropertiesUtil.getProperty("");
+    private static String redisIp = PropertiesUtil.getProperty("redis.ip1");
 
-    private static Integer redisPort = Integer.parseInt(Objects.requireNonNull(PropertiesUtil.getProperty("")));
+    private static Integer redisPort = Integer.parseInt(Objects.requireNonNull(PropertiesUtil.getProperty("redis.port1")));
 
     public static Redisson getRedisson() {
         Config config = new Config();
-        config.useSingleServer().setAddress("redis://127.0.0.1:6379");
+        config.useSingleServer().setAddress("redis://" + redisIp + ":" + redisPort);
         RedissonClient redisson = Redisson.create(config);
         return (Redisson) redisson;
     }
-
 
 
 }
