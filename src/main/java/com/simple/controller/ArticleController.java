@@ -134,7 +134,7 @@ public class ArticleController {
         RLock lock = RedissonConfig.getRedisson().getLock(Const.Redisson_Name.REDISSON_NAME);
         boolean getLock = false;
         try {
-            getLock = lock.tryLock(2, 2, TimeUnit.SECONDS);
+            getLock = lock.tryLock(0, 2, TimeUnit.SECONDS);
             if (getLock) {
                 log.info("获取到了分布式锁，开始执行相关操作");
                 String loginToken = CookieUtil.readLoginToken(request);
