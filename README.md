@@ -30,8 +30,6 @@
 - 完善日志文件
 
 毕业论文开始！
-todo 脚本发布
-todo 修复显示bug
+todo 脚本发布(有点问题，需要找一找)
+todo 修复显示bug(原因是VO封装的时候，有部分HTML标签被截取了)
 todo 消息的删除
-todo redis分布式
-todu 分布式锁
