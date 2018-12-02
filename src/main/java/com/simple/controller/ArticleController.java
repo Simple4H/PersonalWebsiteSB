@@ -82,17 +82,30 @@ public class ArticleController {
     @RequestMapping(value = "/article/create_new_article.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse createNewArticle(String title, String context, HttpServletRequest request) {
-        String loginToken = CookieUtil.readLoginToken(request);
-        String userString = RedisShardedPoolUtil.get(loginToken);
-        User user = JsonUtil.string2Obj(userString, User.class);
-        if (iUserService.checkUserAuthority(user).isSuccess()) {
-            ServerResponse serverResponse = iArticleService.createNewArticle(title, context);
-            if (serverResponse.isSuccess()) {
-                return serverResponse;
+        RLock lock = RedissonConfig.getRedisson().getLock(Const.Redisson_Name.REDISSON_NAME);
+        boolean getLock = false;
+        try {
+            getLock = lock.tryLock(0,5,TimeUnit.SECONDS);
+            if (getLock) {
+                String loginToken = CookieUtil.readLoginToken(request);
+                String userString = RedisShardedPoolUtil.get(loginToken);
+                User user = JsonUtil.string2Obj(userString, User.class);
+                if (iUserService.checkUserAuthority(user).isSuccess()) {
+                    ServerResponse serverResponse = iArticleService.createNewArticle(title, context);
+                    if (serverResponse.isSuccess()) {
+                        return serverResponse;
+                    }
+                    return serverResponse;
+                }
+                return ServerResponse.createByErrorMessage("权限不够哟，无法添加新的文章~");
+            }else{
+                ServerResponse.createByErrorMessage("没有获取到分布式锁");
             }
-            return serverResponse;
+        } catch (InterruptedException e) {
+            log.error("create redisson lock exception:{},Thread Name:{}",e,Thread.currentThread().getName());
+            return ServerResponse.createByErrorMessage("分布式锁获取异常");
         }
-        return ServerResponse.createByErrorMessage("权限不够哟，无法添加新的文章~");
+        return ServerResponse.createByErrorMessage("分布式锁获取异常");
     }
 
     // 后台--删除文章
