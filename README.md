@@ -3,16 +3,6 @@
 
 为了知道自己大学四年学到了什么，也为了记录自己在学习期间遇到的问题，记录的笔记。也欢迎你访问的我的个人博客[https://www.cxm520hyq.com](https://www.cxm520hyq.com)
 
-
-
-### 访客模式
-
-- 账号密码
-
-  用户名：guest
-
-  密    码：guest
-
 - 如何进入后台
 
   ![进入后台](https://github.com/simplecxm/PersonalWebsiteSB/blob/master/src/main/resources/static/other/help1.gif)
