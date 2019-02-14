@@ -1,6 +1,7 @@
 package com.simple.common;
 
 import com.simple.util.PropertiesUtil;
+import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.*;
 import redis.clients.util.Hashing;
 
@@ -11,6 +12,7 @@ import java.util.Objects;
 /**
  * Create by S I M P L E on 2018/06/24 10:51:14
  */
+@Slf4j
 public class RedisShardedPool {
 
     // Jedis连接池
@@ -65,9 +67,9 @@ public class RedisShardedPool {
     }
 
     static {
-        System.out.println(maxTotal);
+        log.info("maxTotal:{}",maxTotal);
         initJedisPool();
-        System.out.println(maxTotal);
+        log.info("maxTotal:{}",maxTotal);
     }
 
     // 开放到外部供使用
