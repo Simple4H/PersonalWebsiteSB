@@ -62,7 +62,7 @@ public class EmailServiceImpl implements IEmailService {
             RedisShardedPoolUtil.setEx(email + "token", Const.Redis_Time.REDIS_EMAIL_CODE_TIME, tokenStr);
             return ServerResponse.createBySuccess("发送成功", token);
         } catch (MailException e) {
-            log.error("发送邮件异常:{}", e);
+            log.error("发送邮件异常", e);
             return ServerResponse.createBySuccessMessage("发送失败");
         }
     }
