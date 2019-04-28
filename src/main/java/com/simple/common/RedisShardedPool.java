@@ -91,14 +91,4 @@ public class RedisShardedPool {
             jedisPool.destroy();
         }
     }
-
-    public static void main(String[] args) {
-
-        ShardedJedis jedis = jedisPool.getResource();
-
-        for (int i = 0; i < 10; i++) {
-            jedis.set("key" + i, "value" + i);
-        }
-        jedisPool.close();
-    }
 }
