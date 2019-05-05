@@ -120,7 +120,7 @@
     <select id="getArticleList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from simple_article order by status desc limit 0,3
+        from simple_article order by status + 0 desc limit 0,3
     </select>
 
     <select id="getIndependentArticle" resultMap="BaseResultMap" parameterType="String">
