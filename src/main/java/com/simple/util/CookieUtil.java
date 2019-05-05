@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class CookieUtil {
     // 生效的域名
-    private final static String COOKIE_DOMAIN = "www.cxm520hyq.com";
+    private final static String COOKIE_DOMAIN = "localhost";
 
     // cookie名字
     private final static String COOKIE_NAME = "simple_login_redis";
