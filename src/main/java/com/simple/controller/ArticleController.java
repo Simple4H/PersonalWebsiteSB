@@ -105,7 +105,7 @@ public class ArticleController {
             log.error("create redisson lock exception:{},Thread Name:{}",e,Thread.currentThread().getName());
             return ServerResponse.createByErrorMessage("分布式锁获取异常");
         }
-        return ServerResponse.createByErrorMessage("分布式锁获取异常");
+        return ServerResponse.createByErrorMessage("没有获取到分布式锁，请稍后再试。");
     }
 
     // 后台--删除文章
