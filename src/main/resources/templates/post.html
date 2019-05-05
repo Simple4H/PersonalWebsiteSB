@@ -79,7 +79,8 @@
             <div class="col-lg-8 col-md-10 mx-auto" th:each="article:${pageInfoServerResponse.data.list}">
                 <a th:href="@{/article/independent(title=${article.title})}">
                     <h2 class="section-heading" th:utext="${article.title}"></h2>
-                    <p th:utext="${article.content}"></p>
+                    <p th:text="${article.content}"></p>
+<!--                    <p th:utext="${#strings.abbreviate(article.content,10)}"></p>-->
                 </a>
                 <p th:utext="${article.createTime}"></p>
                 <hr />
