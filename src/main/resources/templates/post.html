@@ -79,9 +79,9 @@
             <div class="col-lg-8 col-md-10 mx-auto" th:each="article:${pageInfoServerResponse.data.list}">
                 <a th:href="@{/article/independent(title=${article.title})}">
                     <h2 class="section-heading" th:utext="${article.title}"></h2>
-                    <p th:utext="${article.content}"></p>
+                    <p th:text="${article.content}"></p>
                 </a>
-                <p th:utext="${article.createTime}"></p>
+                <p th:text="${article.createTime}"></p>
                 <hr />
             </div>
         </div>
@@ -122,7 +122,7 @@
                     </li>
                 </ul>
                 <div align="center">
-                    <small>S I M P L E © Personal Website 2019</small>
+                    <small>Simple4H © Personal Website 2019</small>
                     <small><a href="http://www.miitbeian.gov.cn">粤ICP备17064694号</a></small>
                 </div>
             </div>
