@@ -44,7 +44,8 @@
             </li>
             <!--消息管理-->
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="messageManager">
-                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#messageManager" data-parent="#exampleAccordion">
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#messageManager"
+                   data-parent="#exampleAccordion">
                     <i class="fa fa-fw fa-envelope"></i>
                     <span class="nav-link-text">消息管理</span>
                 </a>
@@ -133,14 +134,15 @@
                             <td th:utext="${article.content}">文章</td>
                             <td align="center" th:utext="${article.status}">阅读量</td>
                             <td align="center" th:utext="${article.createTime}">创建时间</td>
-                            <td >
-                                <a style="margin: 5px" class="button button-glow button-rounded button-highlight" th:href="@{/article/edit.do(title=${article.title})}">
+                            <td>
+                                <a style="margin: 5px" class="button button-glow button-rounded button-highlight"
+                                   th:href="@{/article/edit.do(title=${article.title})}">
                                     编辑
                                 </a>
                                 <a data-toggle="modal" data-target="#deleteModal">
                                     <a style="margin: 5px"
-                                            class="button button-glow button-rounded button-caution"
-                                            th:href="@{/article/delete_article.do(title=${article.title})}">删除</a>
+                                       class="button button-glow button-rounded button-caution"
+                                       th:href="@{/article/delete_article.do(title=${article.title})}">删除</a>
                                 </a>
                             </td>
                         </tr>
@@ -166,9 +168,9 @@
                     </div>
                 </div>
             </div>
-            <div class="card-footer small text-muted">上次登录的时间是:
-                <td th:text="${session.CURRENT_USER.updateTime}"></td>
-            </div>
+            <!--<div class="card-footer small text-muted">上次登录的时间是:-->
+                <!--<table><tr th:utext="${UserLoginTime}">2018</tr></table>-->
+            <!--</div>-->
         </div>
     </div>
     <!-- /.container-fluid-->
@@ -227,24 +229,24 @@
 
     <!-- Delete Modal-->
     <!--<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"-->
-         <!--aria-hidden="true">-->
-        <!--<div class="modal-dialog" role="document">-->
-            <!--<div class="modal-content">-->
-                <!--<div class="modal-header">-->
-                    <!--<h5 class="modal-title" id="deleteModalLabel">请问确定删除嘛?</h5>-->
-                    <!--<button class="close" type="button" data-dismiss="modal" aria-label="Close">-->
-                        <!--<span aria-hidden="true">×</span>-->
-                    <!--</button>-->
-                <!--</div>-->
-                <!--<div class="modal-body">当你选择确认时候,将会删除该文章</div>-->
-                <!--<tr th:text="${title}"></tr>-->
-                <!--<div class="modal-footer">-->
-                    <!--<button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>-->
-                    <!--<a class="btn btn-primary" th:href="@{/article/delete_article.do(title=${title})}">确认</a>-->
+    <!--aria-hidden="true">-->
+    <!--<div class="modal-dialog" role="document">-->
+    <!--<div class="modal-content">-->
+    <!--<div class="modal-header">-->
+    <!--<h5 class="modal-title" id="deleteModalLabel">请问确定删除嘛?</h5>-->
+    <!--<button class="close" type="button" data-dismiss="modal" aria-label="Close">-->
+    <!--<span aria-hidden="true">×</span>-->
+    <!--</button>-->
+    <!--</div>-->
+    <!--<div class="modal-body">当你选择确认时候,将会删除该文章</div>-->
+    <!--<tr th:text="${title}"></tr>-->
+    <!--<div class="modal-footer">-->
+    <!--<button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>-->
+    <!--<a class="btn btn-primary" th:href="@{/article/delete_article.do(title=${title})}">确认</a>-->
 
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
     <!--</div>-->
     <!-- Bootstrap core JavaScript-->
     <script th:src="@{/vendor/jquery/jquery.min.js}"></script>

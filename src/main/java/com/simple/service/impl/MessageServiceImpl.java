@@ -33,11 +33,19 @@ public class MessageServiceImpl implements IMessageService {
         return ServerResponse.createByErrorMessage("提交失败");
     }
 
-    public ServerResponse<PageInfo> getAllMessage(int pageNum,int pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
+    public ServerResponse<PageInfo> getAllMessage(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         List<Message> messages = messageMapper.getAllMessage();
         PageInfo<Message> pageInfo = new PageInfo<>(messages);
-        return ServerResponse.createBySuccess("查询成功",pageInfo);
+        return ServerResponse.createBySuccess("查询成功", pageInfo);
+    }
+
+    public ServerResponse deleteMessage(String name, String phone) {
+        int resultCount = messageMapper.deleteMessage(name, phone);
+        if (resultCount > 0) {
+            return ServerResponse.createBySuccessMessage("删除成功");
+        }
+        return ServerResponse.createByErrorMessage("删除异常");
     }
 
 }

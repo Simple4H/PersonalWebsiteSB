@@ -3,8 +3,8 @@
 
     <contextName>simple-logback</contextName>
     <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
-    <property name="LOG_HOME" value="/Users/simple/developer/simple_log/logback.log"/>
-    <!-- 彩色日志依赖的渲染类 -->pw
+    <property name="LOG_HOME" value="/Users/simple/developer/simple_log/logback"/>
+    <!-- 彩色日志依赖的渲染类 -->
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
     <conversionRule conversionWord="wex"
                     converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>

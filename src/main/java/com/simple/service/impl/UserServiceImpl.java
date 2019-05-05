@@ -7,7 +7,7 @@ import com.simple.pojo.User;
 import com.simple.service.IUserService;
 import com.simple.util.JsonUtil;
 import com.simple.util.MD5Util;
-import com.simple.util.RedisPoolUtil;
+import com.simple.util.RedisShardedPoolUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,7 +67,7 @@ public class UserServiceImpl implements IUserService {
                 user.setEmail(email);
                 String userString = JsonUtil.obj2String(user);
                 // 将注册好，但是未验证邮箱的账户存入redis
-                String result = RedisPoolUtil.setEx(email, Const.Redis_Time.REDIS_EXIST_TIME, userString);
+                String result = RedisShardedPoolUtil.setEx(email, Const.Redis_Time.REDIS_EMAIL_EXIST_TIME, userString);
                 if (StringUtils.equals(result, "OK")) {
                     return ServerResponse.createBySuccessMessage("ok");
                 }

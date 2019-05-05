@@ -1,16 +1,7 @@
 # Simple Blog--HelloWorld
+# 个人博客
 
 为了知道自己大学四年学到了什么，也为了记录自己在学习期间遇到的问题，记录的笔记。也欢迎你访问的我的个人博客[https://www.cxm520hyq.com](https://www.cxm520hyq.com)
-
-
-
-### 访客模式
-
-- 账号密码
-
-  用户名：guest
-
-  密    码：guest
 
 - 如何进入后台
 
@@ -29,5 +20,7 @@
 - 完善日志文件
 
 毕业论文开始！
-todo 脚本发布
-todo 修复显示bug
+todo 脚本发布(有点问题，需要找一找)
+todo 修复显示bug(原因是VO封装的时候，有部分HTML标签被截取了)
+todo 消息的删除
+todo Bug(阿里云服务器日志路径有问题)
