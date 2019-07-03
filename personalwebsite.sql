@@ -26,8 +26,7 @@ CREATE TABLE `simple_user` (
   UNIQUE KEY `user_name_unique` (`username`) USING BTREE
 )
   ENGINE = InnoDB
-  AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8;
+  AUTO_INCREMENT = 1;
 
 -- 消息表
 CREATE TABLE `simple_message` (
@@ -46,8 +45,7 @@ CREATE TABLE `simple_message` (
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB
-  AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8;
+  AUTO_INCREMENT = 1;
 
 -- 文章表
 CREATE TABLE `simple_article` (
@@ -68,5 +66,4 @@ CREATE TABLE `simple_article` (
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB
-  AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8;
+  AUTO_INCREMENT = 1;
