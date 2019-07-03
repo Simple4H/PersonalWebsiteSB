@@ -1,9 +1,7 @@
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
 
-create Database db_personalwebsite
-  DEFAULT CHARACTER SET utf8
-  COLLATE utf8_general_ci;
+create Database db_personalwebsite;
 use db_personalwebsite;
 
 -- 用户表
