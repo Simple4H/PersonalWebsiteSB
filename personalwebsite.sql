@@ -53,7 +53,7 @@ CREATE TABLE `simple_article` (
   COMMENT '文章表id',
   `title`       varchar(50)    NOT NULL
   COMMENT '标题',
-  `content`     varchar(20000) NOT NULL
+  `content`     text(20000) NOT NULL
   COMMENT '内容',
   `tags`        varchar(50)             DEFAULT NULL
   COMMENT '类型',
