@@ -1,9 +1,7 @@
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
 
-create Database db_personalwebsite
-  DEFAULT CHARACTER SET utf8
-  COLLATE utf8_general_ci;
+create Database db_personalwebsite;
 use db_personalwebsite;
 
 -- 用户表
@@ -28,8 +26,7 @@ CREATE TABLE `simple_user` (
   UNIQUE KEY `user_name_unique` (`username`) USING BTREE
 )
   ENGINE = InnoDB
-  AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8;
+  AUTO_INCREMENT = 1;
 
 -- 消息表
 CREATE TABLE `simple_message` (
@@ -48,8 +45,7 @@ CREATE TABLE `simple_message` (
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB
-  AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8;
+  AUTO_INCREMENT = 1;
 
 -- 文章表
 CREATE TABLE `simple_article` (
@@ -57,7 +53,7 @@ CREATE TABLE `simple_article` (
   COMMENT '文章表id',
   `title`       varchar(50)    NOT NULL
   COMMENT '标题',
-  `content`     varchar(20000) NOT NULL
+  `content`     text(20000) NOT NULL
   COMMENT '内容',
   `tags`        varchar(50)             DEFAULT NULL
   COMMENT '类型',
@@ -70,5 +66,4 @@ CREATE TABLE `simple_article` (
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB
-  AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8;
+  AUTO_INCREMENT = 1;
